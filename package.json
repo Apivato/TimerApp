@@ -1,7 +1,7 @@
 {
   "name": "timer-app",
   "version": "0.1.0",
-  "private": false,
+  "private": true,
   "homepage ": "https://Apivato.github.io/TimerApp",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",

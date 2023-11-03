@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function TimeInput({valueToTimer}) {
 
-    const [value, setValue] = React.useState("0:00");
+    const [value, setValue] = React.useState("00:00:00");
 
     const onChange = (event) => {
       setValue(event.target.value);
@@ -12,8 +12,7 @@ export default function TimeInput({valueToTimer}) {
       const value = event.target.value;
       const seconds = Math.max(0, getSecondsFromHHMMSS(value));
       const time = toHHMMSS(seconds);
-      var timeArray = time.split(":");
-      valueToTimer(timeArray);
+      valueToTimer(time);
       setValue(time);
     };
   
@@ -47,9 +46,7 @@ export default function TimeInput({valueToTimer}) {
 
       return [hours, minutes, seconds]
         .map((val) => (val < 10 ? `0${val}` : val))
-        .filter((val, index) => val !== "00" || index > 0)
-        .join(":")
-        .replace(/^0/, "");
+        .join(":");
     };
   
     return (

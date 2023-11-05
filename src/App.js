@@ -1,8 +1,11 @@
+'use client'
+
 import './App.css';
 import  TimeInput from './TimeInput.js'
 import React, { useState, useRef, useEffect } from 'react'
 import useSound from 'use-sound';
 import beepSfx from './Beeps.wav';
+import {FaBars} from 'react-icons/fa'
 
 function App() {
 
@@ -70,13 +73,13 @@ function App() {
    valueToTimer(start);
   }
 
-  // const onClickDecrement = () => {
+  const onClickDecrement = () => {
   
-  // }
+  }
 
-  // const onClickIncrement = () => {
+  const onClickIncrement = () => {
   
-  // }
+  }
 
   useEffect(() => {
     if(seconds === 0 && minutes === 0 && hours === 0 && isRunning) setDone(true);
@@ -113,21 +116,38 @@ function App() {
   })
 
   return (
-
-    <div className="App">
-       <TimeInput valueToTimer={valueToTimer}/>
-       <div>
-        {
-            <h1>
-              {" "}
-              {hours}:{minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds}
-            </h1>
-        }
+    
+    <div className='bg-graphicImage bg-cover h-screen'>
+      {/* ^global container div */}
+      <div className=''>
+        <div className='p-4'>
+          <FaBars onClick={console.log("suh")} className='cursor-pointer' color='white'/>
+        </div> 
+        <div id="timerInput" className=''>
+            <TimeInput valueToTimer={valueToTimer}/>
+          </div>
       </div>
-       <button onClick={startStop}>{isPause ? "Stop" : "Start"}</button>
-      <button onClick={onClickReset}>Reset</button>
-      {/* <button onClick={onClickIncrement}>+</button>
-      <button onClick={onClickDecrement}>-</button> */}
+      <div className="App py-[400px] items-center space-x-4">
+        {/* input container div */}
+        {/* Output container div */}
+        <div className='text-3xl font-bold md:text-9xl justify-center grid text-white'>
+          {
+              <h1 className='h-10 px-3 md:h-36 md:px-10 rounded-full bg-black'>
+                {" "}
+                {hours}:{minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds}
+              </h1>
+          }
+        </div>
+        {/* Button Container div */}
+        <div className='w-full justify-between items-center px-4'>
+          <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20 py-1 mx-2 my-2' onClick={startStop}>{isPause ? "Stop" : "Start"}</button>
+          <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20 py-1 mx-2 my-2' onClick={onClickReset}>Reset</button>
+          <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20 py-1 mx-2 my-2' onClick={onClickIncrement}>+</button>
+          <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20 py-1 mx-2 my-2' onClick={onClickDecrement}>-</button>
+          <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20 py-1 mx-2 my-2'>5:00</button>
+        </div>
+        
+      </div>
     </div>
   );
 }

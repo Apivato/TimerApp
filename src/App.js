@@ -4,7 +4,8 @@ import './App.css';
 import  TimeInput from './TimeInput.js'
 import React, { useState, useRef, useEffect } from 'react'
 import useSound from 'use-sound';
-import beepSfx from './Beeps.wav';
+import shortBeep from './ShortBeep.wav';
+import longBeep from './LongBeep.wav';
 import {FaBars} from 'react-icons/fa'
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
   const [hours, setHours] = useState("0");
   const [minutes, setMinutes] = useState("0");
   const [seconds, setSeconds] = useState("0");
+  const [radioVal, setRadioVal] = useState("00:00:00");
 
   const [done, setDone] = useState(false);
   const [isRunning, setIsRunning] = useState(false);
@@ -57,8 +59,6 @@ function App() {
       setIsRunning(false);
       setIsPause(true);
     } else{
-      if (hours === 0 && minutes === 0 && seconds === 0 && done){
-        onClickReset();};
       if (start !== "00:00:00"){
         intervalRef.current = setInterval(decreaseTime, 1000);
         setIsRunning(true);
@@ -71,14 +71,40 @@ function App() {
 
   const onClickReset = () => {
    valueToTimer(start);
+  };
+
+  const resetTime = () => {
+    clearInterval(intervalRef.current);
+    setIsRunning(false);
+    setIsPause(false);
+    playLong();
+    valueToTimer(start);
+  }
+
+  const onChangeValue = () => {
+    var val = document.getElementsByName("radioVal");
+    setRadioVal(val);
   }
 
   const onClickDecrement = () => {
-  
+    if (start !== "00:00:00"){
+      // const [startHour, str2, str3] = start.split(":");
+      // const [str1, str2, str3] = start.split(":");
+      // [hours, minutes, seconds]
+      //   .map((val) => (val < 10 ? `0${val}` : val))
+      //   .join(":");
+      // var decrease = start - radioVal;
+      // valueToTimer(decrease);
+    }
   }
 
   const onClickIncrement = () => {
-  
+    // var increase = start + radioVal;
+    // valueToTimer(increase);
+  }
+
+  const onClickFive = () => {
+    valueToTimer("00:05:00")
   }
 
   useEffect(() => {
@@ -86,12 +112,8 @@ function App() {
   }, [seconds, minutes, hours, isRunning]);
 
   useEffect(() => {
-    if (done) {
-      clearInterval(intervalRef.current)
-      setIsRunning(false);
-      setIsPause(false);
-    }
-  },[done]);
+    if (done) resetTime();
+  });
 
   useEffect(() => {
     if(seconds === 0 && minutes === 0 && hours > 0 && isRunning) setMinutes(60);
@@ -109,16 +131,21 @@ function App() {
     if(seconds === 59 && minutes === 59 && !done) setHours(prev => (prev - 1 < 0 ? 0 : prev - 1));
   }, [seconds, minutes, done]);
 
-  const [playBeeps] = useSound(beepSfx, { volume: 0.25 });
+  const [playShort] = useSound(shortBeep, { volume: 0.25 });
+
+  const [playLong] = useSound(longBeep, { volume: 0.25 });
 
   useEffect(() => {
-    if (seconds === 5 && minutes === 0 && hours === 0 && isRunning && !done) playBeeps();
+    if (seconds <= 5 && seconds > 0 && minutes === 0 && hours === 0 && isRunning){
+      playShort();
+    }
   })
 
   return (
     
     <div className='bg-graphicImage bg-cover h-screen'>
       {/* ^global container div */}
+      {/* input container div */}
       <div className=''>
         <div className='p-4'>
           <FaBars onClick={console.log("suh")} className='cursor-pointer' color='white'/>
@@ -128,7 +155,6 @@ function App() {
           </div>
       </div>
       <div className="App py-[400px] items-center space-x-4">
-        {/* input container div */}
         {/* Output container div */}
         <div className='text-3xl font-bold md:text-9xl justify-center grid text-white'>
           {
@@ -142,9 +168,18 @@ function App() {
         <div className='w-full justify-between items-center px-4'>
           <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20 py-1 mx-2 my-2' onClick={startStop}>{isPause ? "Stop" : "Start"}</button>
           <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20 py-1 mx-2 my-2' onClick={onClickReset}>Reset</button>
-          <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20 py-1 mx-2 my-2' onClick={onClickIncrement}>+</button>
-          <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20 py-1 mx-2 my-2' onClick={onClickDecrement}>-</button>
-          <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20 py-1 mx-2 my-2'>5:00</button>
+          <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20 py-1 mx-2 my-2' onClick={onClickFive}>5:00</button>
+          <div>
+            
+            <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20 py-1 mx-2 my-2' onClick={onClickIncrement}>+</button>
+            <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20 py-1 mx-2 my-2' onClick={onClickDecrement}>-</button>
+            <div onChange={onChangeValue} className='text-white'>
+              <input type="radio" value="00:00:15" name="radioVal" /> 15s
+              <input type="radio" value="00:00:30" name="radioVal" /> 30s
+              <input type="radio" value="00:00:45" name="radioVal" /> 45s
+              <input type="radio" value="00:01:00" name="radioVal" /> 1m
+            </div>
+          </div>
         </div>
         
       </div>

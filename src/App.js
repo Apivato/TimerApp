@@ -22,6 +22,49 @@ function App() {
   
   let intervalRef = useRef();
 
+  // function toNum(input) {
+  //   const [str1, str2, str3] = inputValue.split(":");
+  
+  //   const num1 = Number(str1);
+  //   const num2 = Number(str2);
+  //   const num3 = Number(str3);
+    
+  //   return [num1, num2, num3];
+  // }
+
+  const getSecondsFromHHMMSS = (value) => {
+    const [str1, str2, str3] = value.split(":");
+
+    const val1 = Number(str1);
+    const val2 = Number(str2);
+    const val3 = Number(str3);
+
+    if (!isNaN(val1) && isNaN(val2) && isNaN(val3)) {
+      return val1;
+    }
+
+    if (!isNaN(val1) && !isNaN(val2) && isNaN(val3)) {
+      return val1 * 60 + val2;
+    }
+
+    if (!isNaN(val1) && !isNaN(val2) && !isNaN(val3)) {
+      return val1 * 60 * 60 + val2 * 60 + val3;
+    }
+
+    return 0;
+  };
+
+  const toHHMMSS = (secs) => {
+    const secNum = parseInt(secs.toString(), 10);
+    const hours = Math.floor(secNum / 3600);
+    const minutes = Math.floor(secNum / 60) % 60;
+    const seconds = secNum % 60;
+
+    return [hours, minutes, seconds]
+      .map((val) => (val < 10 ? `0${val}` : val))
+      .join(":");
+  };
+
   const valueToTimer = (inputValue) => {
     setStart(inputValue);
     const [str1, str2, str3] = inputValue.split(":");
@@ -29,6 +72,8 @@ function App() {
     const h = Number(str1);
     const m = Number(str2);
     const s = Number(str3);
+
+    // const [h, m, s] = toNum(inputValue);
 
     if (!isNaN(h) && !isNaN(m) && !isNaN(s)) {
       setHours(parseInt(h,10));
@@ -85,22 +130,25 @@ function App() {
     var val = document.getElementsByName("radioVal");
     setRadioVal(val);
   }
-
+  
   const onClickDecrement = () => {
-    if (start !== "00:00:00"){
-      // const [startHour, str2, str3] = start.split(":");
-      // const [str1, str2, str3] = start.split(":");
-      // [hours, minutes, seconds]
-      //   .map((val) => (val < 10 ? `0${val}` : val))
-      //   .join(":");
-      // var decrease = start - radioVal;
-      // valueToTimer(decrease);
+    if (start !== "00:00:00" && seconds >= 15){
+      var sSeconds = Math.max(0, getSecondsFromHHMMSS(start));
+      var rSeconds = Math.max(0, getSecondsFromHHMMSS(radioVal));
+      var totalSeconds = sSeconds - rSeconds;
+      const time = toHHMMSS(totalSeconds);
+      
+      valueToTimer(time);
     }
   }
 
   const onClickIncrement = () => {
-    // var increase = start + radioVal;
-    // valueToTimer(increase);
+      var sSeconds = Math.max(0, getSecondsFromHHMMSS(start));
+      var rSeconds = Math.max(0, getSecondsFromHHMMSS(radioVal));
+      var totalSeconds = sSeconds + rSeconds;
+      const time = toHHMMSS(totalSeconds);
+      
+      valueToTimer(time);
   }
 
   const onClickFive = () => {
@@ -174,10 +222,10 @@ function App() {
             <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20 py-1 mx-2 my-2' onClick={onClickIncrement}>+</button>
             <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20 py-1 mx-2 my-2' onClick={onClickDecrement}>-</button>
             <div onChange={onChangeValue} className='text-white'>
-              <input type="radio" value="00:00:15" name="radioVal" /> 15s
-              <input type="radio" value="00:00:30" name="radioVal" /> 30s
-              <input type="radio" value="00:00:45" name="radioVal" /> 45s
-              <input type="radio" value="00:01:00" name="radioVal" /> 1m
+              <input type="radio" value='00:00:15' name="radioVal" /> 15s
+              <input type="radio" value='00:00:30' name="radioVal" /> 30s
+              <input type="radio" value='00:00:45' name="radioVal" /> 45s
+              <input type="radio" value='00:01:00' name="radioVal" /> 1m
             </div>
           </div>
         </div>

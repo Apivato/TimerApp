@@ -152,6 +152,10 @@ function App() {
     valueToTimer("00:05:00")
   }
 
+  const onClickFour = () => {
+    valueToTimer("00:04:00")
+  }
+
   useEffect(() => {
     if(seconds === 0 && minutes === 0 && hours === 0 && isRunning) setDone(true);
   }, [seconds, minutes, hours, isRunning]);
@@ -214,6 +218,7 @@ function App() {
           <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20 py-1 mx-2 my-2' onClick={startStop}>{isPause ? "Stop" : "Start"}</button>
           <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20 py-1 mx-2 my-2' onClick={onClickReset}>Reset</button>
           <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20 py-1 mx-2 my-2' onClick={onClickFive}>5:00</button>
+          <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20 py-1 mx-2 my-2' onClick={onClickFour}>4:00</button>
           <div>
             
             <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20 py-1 mx-2 my-2' onClick={onClickIncrement}>+</button>

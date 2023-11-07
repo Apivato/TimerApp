@@ -128,11 +128,14 @@ function App() {
       var sSeconds = Math.max(0, getSecondsFromHHMMSS(start));
       var rSeconds = Math.max(0, getSecondsFromHHMMSS(radioVal));
       var totalSeconds = sSeconds - rSeconds;
+      var time = 0;
       if ( totalSeconds >= 0){
-        const time = toHHMMSS(totalSeconds);
-        valueToTimer(time);
+        time = toHHMMSS(totalSeconds);
       }
-        
+      else {
+        time = toHHMMSS(0);
+      }
+      valueToTimer(time);  
     }
   }
 

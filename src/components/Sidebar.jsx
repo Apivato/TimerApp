@@ -16,7 +16,7 @@ const Sidebar = () => {
         {isOpen && (
 
 
-            <div id="timerInput" className=''>
+            <div id="timerInput" className='fixed'>
                 <TimeInput />
             </div>
         )}

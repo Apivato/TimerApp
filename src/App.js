@@ -7,6 +7,7 @@ import useSound from 'use-sound';
 import shortBeep from './ShortBeep.wav';
 import longBeep from './LongBeep.wav';
 import {FaBars} from 'react-icons/fa'
+import Sidebar from './components/Sidebar'
 
 function App() {
 
@@ -58,7 +59,7 @@ function App() {
   const valueToTimer = (inputValue) => {
     setStart(inputValue);
     const [str1, str2, str3] = inputValue.split(":");
-  
+
     const h = Number(str1);
     const m = Number(str2);
     const s = Number(str3);
@@ -69,7 +70,7 @@ function App() {
       setHours(parseInt(h,10));
       setMinutes(parseInt(m,10));
       setSeconds(parseInt(s,10));
-    }  
+    }
 
     if (isNaN(h) && !isNaN(m) && !isNaN(s)) {
       setMinutes(parseInt(m,10));
@@ -196,9 +197,12 @@ function App() {
       {/* ^global container div */}
       {/* input container div */}
       <div className=''>
+        {/*Sidebar */}
         <div className='p-4'>
-          <FaBars onClick={console.log("suh")} className='cursor-pointer' color='white'/>
-        </div> 
+          <Sidebar />
+
+        </div>
+
         <div id="timerInput" className=''>
             <TimeInput valueToTimer={valueToTimer}/>
           </div>

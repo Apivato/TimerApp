@@ -22,16 +22,6 @@ function App() {
   
   let intervalRef = useRef();
 
-  // function toNum(input) {
-  //   const [str1, str2, str3] = inputValue.split(":");
-  
-  //   const num1 = Number(str1);
-  //   const num2 = Number(str2);
-  //   const num3 = Number(str3);
-    
-  //   return [num1, num2, num3];
-  // }
-
   const getSecondsFromHHMMSS = (value) => {
     const [str1, str2, str3] = value.split(":");
 
@@ -127,18 +117,22 @@ function App() {
   }
 
   const onChangeValue = () => {
-    var val = document.getElementsByName("radioVal");
-    setRadioVal(val);
+    var radioButtonGroup = document.getElementsByName("radioVal");
+    var checkedRadio =Array.from(radioButtonGroup).find((radio) => radio.checked);
+
+    setRadioVal(checkedRadio.value);
   }
   
   const onClickDecrement = () => {
-    if (start !== "00:00:00" && seconds >= 15){
+    if (start !== "00:00:00"){
       var sSeconds = Math.max(0, getSecondsFromHHMMSS(start));
       var rSeconds = Math.max(0, getSecondsFromHHMMSS(radioVal));
       var totalSeconds = sSeconds - rSeconds;
-      const time = toHHMMSS(totalSeconds);
-      
-      valueToTimer(time);
+      if ( totalSeconds >= 0){
+        const time = toHHMMSS(totalSeconds);
+        valueToTimer(time);
+      }
+        
     }
   }
 
@@ -222,10 +216,10 @@ function App() {
             <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20 py-1 mx-2 my-2' onClick={onClickIncrement}>+</button>
             <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20 py-1 mx-2 my-2' onClick={onClickDecrement}>-</button>
             <div onChange={onChangeValue} className='text-white'>
-              <input type="radio" value='00:00:15' name="radioVal" /> 15s
-              <input type="radio" value='00:00:30' name="radioVal" /> 30s
-              <input type="radio" value='00:00:45' name="radioVal" /> 45s
-              <input type="radio" value='00:01:00' name="radioVal" /> 1m
+              <input type="radio" value="00:00:15" name="radioVal" /> 15s
+              <input type="radio" value="00:00:30" name="radioVal" /> 30s
+              <input type="radio" value="00:00:45" name="radioVal" /> 45s
+              <input type="radio" value="00:01:00" name="radioVal" /> 1m
             </div>
           </div>
         </div>

@@ -203,11 +203,11 @@ function App() {
 
         </div>
 
-        <div id="timerInput" className=''>
+        <div id="timerInput" className='hidden'>
             <TimeInput valueToTimer={valueToTimer}/>
           </div>
       </div>
-      <div className="App py-[400px] items-center space-x-4">
+      <div className="App py-[310px] items-center">
         {/* Output container div */}
         <div className='text-3xl font-bold md:text-9xl justify-center grid text-white'>
           {
@@ -218,15 +218,15 @@ function App() {
           }
         </div>
         {/* Button Container div */}
-        <div className='w-full justify-between items-center px-4'>
-          <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20 py-1 mx-2 my-2' onClick={startStop}>{isPause ? "Stop" : "Start"}</button>
-          <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20 py-1 mx-2 my-2' onClick={onClickReset}>Reset</button>
-          <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20 py-1 mx-2 my-2' onClick={onClickFive}>5:00</button>
-          <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20 py-1 mx-2 my-2' onClick={onClickFour}>4:00</button>
+        <div className='w-full items-center'>
+          <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20 py-1 mx-2 my-2 font-semibold' onClick={startStop}>{isPause ? "Stop" : "Start"}</button>
+          <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20 py-1 mx-2 my-2 font-bold' onClick={onClickReset}>Reset</button>
+          <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20 py-1 mx-2 my-2  font-black' onClick={onClickFive}>5:00</button>
+          <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20 py-1 mx-2 my-2 font-semibold font-mono' onClick={onClickFour}>4:00</button>
           <div>
             
-            <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20 py-1 mx-2 my-2' onClick={onClickIncrement}>+</button>
-            <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20 py-1 mx-2 my-2' onClick={onClickDecrement}>-</button>
+            <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md  py-1 mx-2 my-2 font-bold h-9 w-20  ' onClick={onClickIncrement}>+</button>
+            <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md  py-1 mx-2 my-2 font-bold h-9 w-20  ' onClick={onClickDecrement}>-</button>
             <div onChange={onChangeValue} className='text-white'>
               <input type="radio" value="00:00:15" name="radioVal" /> 15s
               <input type="radio" value="00:00:30" name="radioVal" /> 30s
@@ -242,3 +242,4 @@ function App() {
 }
 
 export default App;
+

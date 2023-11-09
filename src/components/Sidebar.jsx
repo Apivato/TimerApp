@@ -25,10 +25,10 @@ const Sidebar = ({sideBarToTimer, toggleReset, toggleRestart}) => {
 
     return(
 
-    <div className="">
-        <FaBars onClick={() => setOpen(!isOpen)} className='cursor-pointer hover:opacity-75 h-8 w-8 ' color='white'/>
+    <div className="fixed">
+        <FaBars onClick={() => setOpen(!isOpen)} className='cursor-pointer hover:opacity-75 md:h-8 md:w-8 ' color='white'/>
         {isOpen && (
-        <ul className="fixed transition-all scale-125 px-30 m-8 bg-opacity-50 bg-black rounded">
+        <ul className="fixed transition-all md:scale-125 px-30 md:m-8 bg-opacity-50 bg-black rounded font-semibold font-mono ">
 
             <li id="timerInput" className="">
                 <div className="font-semibold text-white py-2">
@@ -41,7 +41,7 @@ const Sidebar = ({sideBarToTimer, toggleReset, toggleRestart}) => {
                 <div className="text-white font-semibold py-2">
                     Auto Reset
                 </div>
-                <ToggleSlider onToggle={state => setResetActive(state)} draggable={false} barBackgroundColorActive={"#73f3eb"} />
+                <ToggleSlider onToggle={state => setResetActive(state)} draggable={false} barBackgroundColorActive={"#73f3eb"} active={false} />
             </li>
 
             <li id="mode2">

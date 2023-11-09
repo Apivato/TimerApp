@@ -1,12 +1,10 @@
 'use client'
 
 import './App.css';
-import  TimeInput from './TimeInput.js'
 import React, { useState, useRef, useEffect } from 'react'
 import useSound from 'use-sound';
 import shortBeep from './ShortBeep.wav';
 import longBeep from './LongBeep.wav';
-import {FaBars} from 'react-icons/fa'
 import Sidebar from './components/Sidebar'
 
 function App() {
@@ -15,13 +13,23 @@ function App() {
   const [hours, setHours] = useState("0");
   const [minutes, setMinutes] = useState("0");
   const [seconds, setSeconds] = useState("0");
-  const [radioVal, setRadioVal] = useState("00:00:00");
+  const [radioVal, setRadioVal] = useState("00:00:15");
 
   const [done, setDone] = useState(false);
   const [isRunning, setIsRunning] = useState(false);
   const [isPause, setIsPause] = useState(false);
+
+  const [isReset, setIsReset] = useState(false)
+  const [isRestart, setIsRestart] = useState(false)
   
   let intervalRef = useRef();
+  let secondsRef = useRef();
+
+  secondsRef.current = [seconds, minutes, hours];
+
+  const getCurrTime = () => {
+    return secondsRef.current[2]+":"+secondsRef.current[1]+":"+secondsRef.current[0];
+  }
 
   const getSecondsFromHHMMSS = (value) => {
     const [str1, str2, str3] = value.split(":");
@@ -57,7 +65,10 @@ function App() {
   };
 
   const valueToTimer = (inputValue) => {
-    setStart(inputValue);
+    if (!isRunning){
+      setStart(inputValue);
+    }
+    
     const [str1, str2, str3] = inputValue.split(":");
 
     const h = Number(str1);
@@ -86,36 +97,24 @@ function App() {
   };
 
   const decreaseTime = () => {
-    setSeconds(prev => prev -1);
+    setSeconds(prev => prev - 1);
   };
 
   const startStop = () => {
     if (isRunning) {
       clearInterval(intervalRef.current);
       setIsRunning(false);
-      setIsPause(true);
+      setIsPause(false);
     } else{
       if (start !== "00:00:00"){
         intervalRef.current = setInterval(decreaseTime, 1000);
         setIsRunning(true);
-        setIsPause(false);
+        setIsPause(true);
       };
     }
-    setIsPause((prev) => !prev)
+    // setIsPause((prev) => !prev);
     // console.log(isPause,isRunning, done);
   };
-
-  const onClickReset = () => {
-   valueToTimer(start);
-  };
-
-  const resetTime = () => {
-    clearInterval(intervalRef.current);
-    setIsRunning(false);
-    setIsPause(false);
-    playLong();
-    valueToTimer(start);
-  }
 
   const onChangeValue = () => {
     var radioButtonGroup = document.getElementsByName("radioVal");
@@ -126,7 +125,8 @@ function App() {
   
   const onClickDecrement = () => {
     if (start !== "00:00:00"){
-      var sSeconds = Math.max(0, getSecondsFromHHMMSS(start));
+      var currTime = getCurrTime();
+      var sSeconds = Math.max(0, getSecondsFromHHMMSS(currTime));
       var rSeconds = Math.max(0, getSecondsFromHHMMSS(radioVal));
       var totalSeconds = sSeconds - rSeconds;
       var time = 0;
@@ -141,12 +141,14 @@ function App() {
   }
 
   const onClickIncrement = () => {
-      var sSeconds = Math.max(0, getSecondsFromHHMMSS(start));
-      var rSeconds = Math.max(0, getSecondsFromHHMMSS(radioVal));
-      var totalSeconds = sSeconds + rSeconds;
-      const time = toHHMMSS(totalSeconds);
-      
-      valueToTimer(time);
+    var currTime = getCurrTime();
+    var sSeconds = Math.max(0, getSecondsFromHHMMSS(currTime));
+    var rSeconds = Math.max(0, getSecondsFromHHMMSS(radioVal));
+    var totalSeconds = sSeconds + rSeconds;
+    const time = toHHMMSS(totalSeconds);
+    
+    valueToTimer(time);
+    
   }
 
   const onClickFive = () => {
@@ -157,13 +159,53 @@ function App() {
     valueToTimer("00:04:00")
   }
 
-  useEffect(() => {
-    if(seconds === 0 && minutes === 0 && hours === 0 && isRunning) setDone(true);
-  }, [seconds, minutes, hours, isRunning]);
+  const updateReset = () => {
+    setIsReset(prev => !prev)
+  }
+
+  const updateRestart = () => {
+    setIsRestart(prev => !prev)
+  }
+
+  const onClickReset = () => {
+    valueToTimer(start);
+   };
+ 
+   const reset = () => {
+     clearInterval(intervalRef.current);
+     setIsRunning(false);
+     setIsPause(false);
+   }
+ 
+   const resetTime = () => {
+     reset();
+     valueToTimer(start);
+   }
+ 
+   const resetLoop = () => {
+     valueToTimer(start);
+   }
+
 
   useEffect(() => {
-    if (done) resetTime();
-  });
+    if(seconds === 0 && minutes === 0 && hours === 0 && isRunning) 
+    {
+      setDone(true);
+      playLong();
+    }
+  }, [seconds, minutes, hours, isRunning, done]);
+
+  useEffect(() => {
+    if (done && !isReset && !isRestart) {
+      reset();
+    }
+    else if (done && isReset && !isRestart) {
+      resetTime();
+    }
+    if (isRestart && done) {
+      resetLoop();
+    }
+  }, [isReset, isRestart, done]);
 
   useEffect(() => {
     if(seconds === 0 && minutes === 0 && hours > 0 && isRunning) setMinutes(60);
@@ -186,28 +228,21 @@ function App() {
   const [playLong] = useSound(longBeep, { volume: 0.25 });
 
   useEffect(() => {
-    if (seconds <= 5 && seconds > 0 && minutes === 0 && hours === 0 && isRunning){
+    if (seconds <= 5 && seconds > 0 && minutes === 0 && hours === 0 && isRunning && !done){
       playShort();
     }
-  })
+  }, [seconds, minutes, hours, isRunning, done])
 
   return (
     
     <div className='bg-graphicImage bg-cover h-screen'>
       {/* ^global container div */}
       {/* input container div */}
-      <div className=''>
+      <div id="mySidenav" className='p-4'>
         {/*Sidebar */}
-        <div className='p-4'>
-          <Sidebar />
-
-        </div>
-
-        <div id="timerInput" className='hidden'>
-            <TimeInput valueToTimer={valueToTimer}/>
-          </div>
+        <Sidebar toggleReset={updateReset} toggleRestart={updateRestart} sideBarToTimer={valueToTimer}/>
       </div>
-      <div className="App py-[310px] items-center">
+      <div id="main" className="App py-[400px] items-center space-x-4">
         {/* Output container div */}
         <div className='text-3xl font-bold md:text-9xl justify-center grid text-white'>
           {
@@ -228,7 +263,7 @@ function App() {
             <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md  py-1 mx-2 my-2 font-bold h-9 w-20  ' onClick={onClickIncrement}>+</button>
             <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md  py-1 mx-2 my-2 font-bold h-9 w-20  ' onClick={onClickDecrement}>-</button>
             <div onChange={onChangeValue} className='text-white'>
-              <input type="radio" value="00:00:15" name="radioVal" /> 15s
+              <input type="radio" value="00:00:15" defaultChecked name="radioVal" /> 15s
               <input type="radio" value="00:00:30" name="radioVal" /> 30s
               <input type="radio" value="00:00:45" name="radioVal" /> 45s
               <input type="radio" value="00:01:00" name="radioVal" /> 1m

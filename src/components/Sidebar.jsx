@@ -4,12 +4,15 @@ import TimeInput from "../TimeInput";
 import { ToggleSlider } from "react-toggle-slider";
 
 
-const Sidebar = () => {
+const Sidebar = ({sideBarToTimer, toggleReset, toggleRestart}) => {
     const [isOpen, setOpen] = useState(false)
     const [mode1Active, isMode1Active] = useState(false);
     const [mode2Active, isMode2Active] = useState(false);
 
 
+    const sendTimeInput = (inputValue) =>{
+        sideBarToTimer(inputValue);
+    }
 
     return(
 
@@ -18,7 +21,7 @@ const Sidebar = () => {
         {isOpen && (
         <ul className="fixed transition-all scale-125 px-30 m-8 bg-opacity-50 bg-black rounded">
 
-            <li id="timerInput" className="">
+            <li id="timerInput" className="" sendTimeInput={sendTimeInput}>
                 <div className="font-semibold text-white py-2">
                     Input Time
                 </div>
@@ -45,5 +48,4 @@ const Sidebar = () => {
     </div>
     );
 }
-
 export default Sidebar;

@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function TimeInput({valueToTimer}) {
+export default function TimeInput({sendTimeInput}) {
 
     const [value, setValue] = React.useState("00:00:00");
 
@@ -12,7 +12,7 @@ export default function TimeInput({valueToTimer}) {
       const value = event.target.value;
       const seconds = Math.max(0, getSecondsFromHHMMSS(value));
       const time = toHHMMSS(seconds);
-      valueToTimer(time);
+      sendTimeInput(time);
       setValue(time);
     };
   

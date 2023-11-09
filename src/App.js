@@ -1,12 +1,12 @@
 'use client'
 
 import './App.css';
-import  TimeInput from './TimeInput.js'
+// import  TimeInput from './TimeInput.js'
 import React, { useState, useRef, useEffect } from 'react'
 import useSound from 'use-sound';
 import shortBeep from './ShortBeep.wav';
 import longBeep from './LongBeep.wav';
-import {FaBars} from 'react-icons/fa'
+// import {FaBars} from 'react-icons/fa'
 import Sidebar from './components/Sidebar'
 
 function App() {
@@ -17,9 +17,13 @@ function App() {
   const [seconds, setSeconds] = useState("0");
   const [radioVal, setRadioVal] = useState("00:00:00");
 
+  const [isRadioChecked, setIsRadioChecked] = useState(false);
   const [done, setDone] = useState(false);
   const [isRunning, setIsRunning] = useState(false);
   const [isPause, setIsPause] = useState(false);
+
+  const [isReset, setIsReset] = useState(false)
+  const [isRestart, setIsRestart] = useState(false)
   
   let intervalRef = useRef();
 
@@ -109,11 +113,14 @@ function App() {
    valueToTimer(start);
   };
 
-  const resetTime = () => {
+  const reset = () => {
     clearInterval(intervalRef.current);
     setIsRunning(false);
     setIsPause(false);
-    playLong();
+  }
+
+  const resetTime = () => {
+    reset();
     valueToTimer(start);
   }
 
@@ -122,10 +129,11 @@ function App() {
     var checkedRadio =Array.from(radioButtonGroup).find((radio) => radio.checked);
 
     setRadioVal(checkedRadio.value);
+    setIsRadioChecked(true);
   }
   
   const onClickDecrement = () => {
-    if (start !== "00:00:00"){
+    if (start !== "00:00:00" && isRadioChecked){
       var sSeconds = Math.max(0, getSecondsFromHHMMSS(start));
       var rSeconds = Math.max(0, getSecondsFromHHMMSS(radioVal));
       var totalSeconds = sSeconds - rSeconds;
@@ -141,12 +149,14 @@ function App() {
   }
 
   const onClickIncrement = () => {
+    if (isRadioChecked){
       var sSeconds = Math.max(0, getSecondsFromHHMMSS(start));
       var rSeconds = Math.max(0, getSecondsFromHHMMSS(radioVal));
       var totalSeconds = sSeconds + rSeconds;
       const time = toHHMMSS(totalSeconds);
       
       valueToTimer(time);
+    }
   }
 
   const onClickFive = () => {
@@ -157,13 +167,34 @@ function App() {
     valueToTimer("00:04:00")
   }
 
-  useEffect(() => {
-    if(seconds === 0 && minutes === 0 && hours === 0 && isRunning) setDone(true);
-  }, [seconds, minutes, hours, isRunning]);
+  const updateReset = () => {
+    setIsReset(prev => !prev)
+  }
+
+  const updateRestart = () => {
+    setIsRestart(prev => !prev)
+  }
 
   useEffect(() => {
-    if (done) resetTime();
-  });
+    if(seconds === 0 && minutes === 0 && hours === 0 && isRunning) 
+    {
+      setDone(true);
+      playLong();
+    }
+  }, [seconds, minutes, hours, isRunning, done]);
+
+  useEffect(() => {
+    if (done && !isReset) {
+      reset();
+    }
+    else if (done && isReset) {
+      resetTime();
+    }
+    if (isRestart && done) {
+      resetTime();
+      startStop();
+    }
+  }, [isReset, isRestart, done]);
 
   useEffect(() => {
     if(seconds === 0 && minutes === 0 && hours > 0 && isRunning) setMinutes(60);
@@ -186,7 +217,7 @@ function App() {
   const [playLong] = useSound(longBeep, { volume: 0.25 });
 
   useEffect(() => {
-    if (seconds <= 5 && seconds > 0 && minutes === 0 && hours === 0 && isRunning){
+    if (seconds <= 5 && seconds > 0 && minutes === 0 && hours === 0 && isRunning && !done){
       playShort();
     }
   })
@@ -196,18 +227,11 @@ function App() {
     <div className='bg-graphicImage bg-cover h-screen'>
       {/* ^global container div */}
       {/* input container div */}
-      <div className=''>
+      <div id="mySidenav" className='p-4'>
         {/*Sidebar */}
-        <div className='p-4'>
-          <Sidebar />
-
-        </div>
-
-        <div id="timerInput" className='hidden'>
-            <TimeInput valueToTimer={valueToTimer}/>
-          </div>
+        <Sidebar toggleReset={updateReset} toggleRestart={updateRestart} sideBarToTimer={valueToTimer}/>
       </div>
-      <div className="App py-[310px] items-center">
+      <div id="main" className="App py-[400px] items-center space-x-4">
         {/* Output container div */}
         <div className='text-3xl font-bold md:text-9xl justify-center grid text-white'>
           {

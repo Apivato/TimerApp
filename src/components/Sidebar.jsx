@@ -6,7 +6,7 @@ import TimeInput from "../TimeInput";
 import { ToggleSlider } from "react-toggle-slider";
 
 
-const Sidebar = ({sideBarToTimer, toggleReset, toggleRestart}) => {
+const Sidebar = ({sideBarToTimer, toggleReset, toggleRestart, onClickFive, onClickFour, onClickIncrement, onClickDecrement, onChangeValue}) => {
     const [isOpen, setOpen] = useState(false)
     const [resetActive, setResetActive] = useState(false);
     const [restartActive, setRestartActive] = useState(false);
@@ -30,7 +30,7 @@ const Sidebar = ({sideBarToTimer, toggleReset, toggleRestart}) => {
     <div className="fixed">
         <FaBars onClick={() => setOpen(!isOpen)} className='cursor-pointer hover:opacity-75 md:h-8 md:w-8 ' color='white'/>
         {isOpen && (
-        <ul className="fixed transition-all md:scale-125 px-30 md:m-8 bg-opacity-50 bg-black rounded font-semibold font-mono ">
+        <ul className='fixed transition-all md:scale-125 px-30 md:mx-8 md:my-14 bg-opacity-50 bg-black rounded font-semibold font-mono'>
 
             <li id="timerInput" className="">
                 <div className="font-semibold text-white py-2">
@@ -38,37 +38,41 @@ const Sidebar = ({sideBarToTimer, toggleReset, toggleRestart}) => {
                 </div>
                 <TimeInput sendTimeInput={sendTimeInput}/>
             </li>
-
+            <li>
+                <div className="font-semibold text-white py-2">
+                    Preset Input
+                </div>
+                <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20 py-1 mx-2 my-2 font-semibold font-mono' onClick={onClickFive}>5:00</button>
+                <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20 py-1 mx-2 my-2 font-semibold font-mono' onClick={onClickFour}>4:00</button>
+            </li>
+            <li>
+            <div>
+                <div className="font-semibold text-white py-2">
+                    Preset Increments
+                </div>
+                <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md  py-1 mx-2 my-2 font-bold h-9 w-20  ' onClick={onClickIncrement}>+</button>
+                <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md  py-1 mx-2 my-2 font-bold h-9 w-20  ' onClick={onClickDecrement}>-</button>
+                <div onChange={onChangeValue} className='text-white font-semibold font-mono text-xl'>
+                    <input type="radio" value="00:00:15" defaultChecked name="radioVal" className="w-4 h-4 accent-[#73f3eb]" /> 15s
+                    <input type="radio" value="00:00:30" name="radioVal" className="w-4 h-4"/> 30s
+                    <input type="radio" value="00:00:45" name="radioVal" className="w-4 h-4"/> 45s
+                    <input type="radio" value="00:01:00" name="radioVal" className="w-4 h-4"/> 1m
+                </div>
+          </div>
+            </li>
             <li id="mode1">
                 <div className="text-white font-semibold py-2">
                     Auto Reset
                 </div>
-                <ToggleSlider onToggle={state => setResetActive(state)} draggable={false} barBackgroundColorActive={"#73f3eb"} active={false} />
+                <ToggleSlider onToggle={state => setResetActive(state)} draggable={false} barBackgroundColorActive={"#73f3eb"} />
             </li>
 
             <li id="mode2">
                 <div className="text-white font-semibold py-2">
                     Auto Restart
                 </div>
-                <ToggleSlider onToggle={state => setRestartActive(state)} draggable={false} barBackgroundColorActive={"#73f3eb"} padding/>
+                <ToggleSlider onToggle={state => setRestartActive(state)} draggable={false} barBackgroundColorActive={"#73f3eb"} />
             </li>
-            {/* <li className="text-white">
-                <h4>Instructions Manual</h4>
-                <p>
-                    This timer functions as a countdown clock starting from what ever input start time you give it.  
-                    This being either one of the preset buttons, value from the input, or any combination or increments you submit while the timer
-                    is not running.
-
-                    if an input, preset, or increment of time is given while it is running it will not keep that time as a start time and reset to it when you reset.  
-                    It will assume that any changes while running is a temporary change for that run of the timer.
-
-                    The auto reset switch will allow the timer to auto rest when the current run of the timer ends.
-
-                    The Auto Restart switch will allow the timer to loop indefinetly until the switch is turned off or the stop button is pressed.
-
-                </p>
-            </li> */}
-
         </ul>
         )}
 

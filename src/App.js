@@ -235,19 +235,18 @@ function App() {
 
   return (
     
-    <div className='bg-graphicImage bg-cover bg-no-repeat bg-center'>
+    <div className='bg-graphicImage h-screen bg-cover bg-no-repeat bg-center'>
       {/* ^global container div */}
       {/* input container div */}
       <div id="mySidenav" className='p-4'>
         {/*Sidebar */}
-        <Sidebar toggleReset={updateReset} toggleRestart={updateRestart} sideBarToTimer={valueToTimer}/>
+        <Sidebar toggleReset={updateReset} toggleRestart={updateRestart} sideBarToTimer={valueToTimer} onClickFive={onClickFive} onClickFour={onClickFour} onClickDecrement={onClickDecrement} onClickIncrement={onClickIncrement} onChangeValue={onChangeValue}/>
       </div>
-      <div id="main" className="App py-[300px] items-center">
+      <div id="main" className="App py-[250px] items-center">
         {/* Output container div */}
-        <div className='font-bold md:text-[180px] justify-center grid inline-grid text-white font-semibold font-mono'>
+        <div className='font-bold text-[75px] md:text-[350px] justify-center grid inline-grid text-white font-semibold font-mono'>
           {
-              <h1 className='h-8 px-8 md:h-64 md:px-10 rounded-full items-center bg-black opacity-95 '>
-                {" "}
+              <h1 className='h-30 px-8 md:h-90 md:px-10 rounded-full items-center bg-black opacity-95 '>
                 {hours}:{minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds}
               </h1>
           }
@@ -256,19 +255,7 @@ function App() {
         <div className='w-full items-center text-lg'>
           <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20 py-1 mx-2 my-2 font-semibold font-mono' onClick={startStop}>{isPause ? "Stop" : "Start"}</button>
           <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20 py-1 mx-2 my-2 font-semibold font-mono' onClick={onClickReset}>Reset</button>
-          <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20 py-1 mx-2 my-2 font-semibold font-mono' onClick={onClickFive}>5:00</button>
-          <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20 py-1 mx-2 my-2 font-semibold font-mono' onClick={onClickFour}>4:00</button>
-          <div>
-            
-            <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md  py-1 mx-2 my-2 font-bold h-9 w-20  ' onClick={onClickIncrement}>+</button>
-            <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md  py-1 mx-2 my-2 font-bold h-9 w-20  ' onClick={onClickDecrement}>-</button>
-            <div onChange={onChangeValue} className='text-white font-semibold font-mono text-xl'>
-              <input type="radio" value="00:00:15" defaultChecked name="radioVal" className="w-4 h-4 accent-[#73f3eb]" /> 15s
-              <input type="radio" value="00:00:30" name="radioVal" className="w-4 h-4"/> 30s
-              <input type="radio" value="00:00:45" name="radioVal" className="w-4 h-4"/> 45s
-              <input type="radio" value="00:01:00" name="radioVal" className="w-4 h-4"/> 1m
-            </div>
-          </div>
+          
         </div>
         
       </div>

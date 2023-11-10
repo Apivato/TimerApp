@@ -28,9 +28,9 @@ const Sidebar = ({sideBarToTimer, toggleReset, toggleRestart, onClickFive, onCli
     return(
 
     <div className="fixed">
-        <FaBars onClick={() => setOpen(!isOpen)} className='cursor-pointer hover:opacity-75 md:h-8 md:w-8 ' color='white'/>
+        <FaBars onClick={() => setOpen(!isOpen)} className='cursor-pointer hover:opacity-75 md:h-8 md:w-8 transition-all duration-300 ' color='white'/>
         {isOpen && (
-        <ul className='fixed transition-all md:scale-125 px-30 md:mx-8 md:my-14 bg-opacity-50 bg-black rounded font-semibold font-mono'>
+        <ul className='fixed transition-all duration 300 md:scale-125 px-30 md:mx-8 md:my-14 bg-opacity-50 bg-black rounded font-semibold font-mono'>
 
             <li id="timerInput" className="">
                 <div className="font-semibold text-white py-2">

@@ -6,8 +6,11 @@ module.exports = {
       backgroundImage:{
         'graphicImage': "url('/src/background.png')",
       },
+
     }
   },
   plugins: [],
+
 }
+
 

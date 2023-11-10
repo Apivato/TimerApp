@@ -6,6 +6,8 @@ import useSound from 'use-sound';
 import shortBeep from './ShortBeep.wav';
 import longBeep from './LongBeep.wav';
 import Sidebar from './components/Sidebar'
+import getSecondsFromHHMMSS from "./actions/getSecondsFromHHMMSS";
+import setToHHMMSS from "./actions/setToHHMMSS";
 
 function App() {
 
@@ -31,38 +33,8 @@ function App() {
     return secondsRef.current[2]+":"+secondsRef.current[1]+":"+secondsRef.current[0];
   }
 
-  const getSecondsFromHHMMSS = (value) => {
-    const [str1, str2, str3] = value.split(":");
 
-    const val1 = Number(str1);
-    const val2 = Number(str2);
-    const val3 = Number(str3);
 
-    if (!isNaN(val1) && isNaN(val2) && isNaN(val3)) {
-      return val1;
-    }
-
-    if (!isNaN(val1) && !isNaN(val2) && isNaN(val3)) {
-      return val1 * 60 + val2;
-    }
-
-    if (!isNaN(val1) && !isNaN(val2) && !isNaN(val3)) {
-      return val1 * 60 * 60 + val2 * 60 + val3;
-    }
-
-    return 0;
-  };
-
-  const toHHMMSS = (secs) => {
-    const secNum = parseInt(secs.toString(), 10);
-    const hours = Math.floor(secNum / 3600);
-    const minutes = Math.floor(secNum / 60) % 60;
-    const seconds = secNum % 60;
-
-    return [hours, minutes, seconds]
-      .map((val) => (val < 10 ? `0${val}` : val))
-      .join(":");
-  };
 
   const valueToTimer = (inputValue) => {
     if (!isRunning){
@@ -131,10 +103,10 @@ function App() {
       var totalSeconds = sSeconds - rSeconds;
       var time = 0;
       if ( totalSeconds >= 0){
-        time = toHHMMSS(totalSeconds);
+        time = setToHHMMSS(totalSeconds);
       }
       else {
-        time = toHHMMSS(0);
+        time = setToHHMMSS(0);
       }
       valueToTimer(time);  
     }
@@ -145,7 +117,7 @@ function App() {
     var sSeconds = Math.max(0, getSecondsFromHHMMSS(currTime));
     var rSeconds = Math.max(0, getSecondsFromHHMMSS(radioVal));
     var totalSeconds = sSeconds + rSeconds;
-    const time = toHHMMSS(totalSeconds);
+    const time = setToHHMMSS(totalSeconds);
     
     valueToTimer(time);
     
@@ -235,34 +207,40 @@ function App() {
 
   return (
     
-    <div className='bg-graphicImage bg-cover bg-no-repeat bg-center'>
+    <div className='bg-graphicImage bg-cover bg-no-repeat bg-center bg-fixed overflow-y-auto transition '>
       {/* ^global container div */}
       {/* input container div */}
+
       <div id="mySidenav" className='p-4'>
         {/*Sidebar */}
         <Sidebar toggleReset={updateReset} toggleRestart={updateRestart} sideBarToTimer={valueToTimer}/>
       </div>
-      <div id="main" className="App py-[300px] items-center">
+      <div className="m-40">
+
+      </div>
+
+      <div id="main" className="App h-screen max-w-full ">
         {/* Output container div */}
-        <div className='font-bold md:text-[180px] justify-center grid inline-grid text-white font-semibold font-mono'>
+        <div className='text-8xl lg:text-[180px] items-center justify-center grid text-white font-semibold font-mono transition-all duration-300'>
           {
-              <h1 className='h-8 px-8 md:h-64 md:px-10 rounded-full items-center bg-black opacity-95 '>
+              <h1 className=' lg:h-48 lg:px-16 rounded-full bg-black opacity-95 text lg:py-26 '>
                 {" "}
                 {hours}:{minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds}
               </h1>
           }
         </div>
+
         {/* Button Container div */}
-        <div className='w-full items-center text-lg'>
-          <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20 py-1 mx-2 my-2 font-semibold font-mono' onClick={startStop}>{isPause ? "Stop" : "Start"}</button>
-          <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20 py-1 mx-2 my-2 font-semibold font-mono' onClick={onClickReset}>Reset</button>
-          <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20 py-1 mx-2 my-2 font-semibold font-mono' onClick={onClickFive}>5:00</button>
-          <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20 py-1 mx-2 my-2 font-semibold font-mono' onClick={onClickFour}>4:00</button>
+        <div className='w-full items-center lg:my-6 font-semibold font-mono transition-all duration-300 '>
+          <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20  py-1 mx-2 my-4 ' onClick={startStop}>{isPause ? "Stop" : "Start"}</button>
+          <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20  py-1 mx-2 my-4 ' onClick={onClickReset}>Reset</button>
+          <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20 py-1 mx-2 my-4 ' onClick={onClickFive}>5:00</button>
+          <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20 py-1 mx-2 my-4 ' onClick={onClickFour}>4:00</button>
           <div>
             
             <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md  py-1 mx-2 my-2 font-bold h-9 w-20  ' onClick={onClickIncrement}>+</button>
             <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md  py-1 mx-2 my-2 font-bold h-9 w-20  ' onClick={onClickDecrement}>-</button>
-            <div onChange={onChangeValue} className='text-white font-semibold font-mono text-xl'>
+            <div onChange={onChangeValue} className='text-white font-semibold font-mono text-xl my-2'>
               <input type="radio" value="00:00:15" defaultChecked name="radioVal" className="w-4 h-4 accent-[#73f3eb]" /> 15s
               <input type="radio" value="00:00:30" name="radioVal" className="w-4 h-4"/> 30s
               <input type="radio" value="00:00:45" name="radioVal" className="w-4 h-4"/> 45s

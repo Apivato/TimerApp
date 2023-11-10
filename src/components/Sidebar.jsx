@@ -33,26 +33,26 @@ const Sidebar = ({sideBarToTimer, toggleReset, toggleRestart, onClickFive, onCli
         <ul className='fixed transition-all duration 300 md:scale-125 px-30 md:mx-8 md:my-14 bg-opacity-50 bg-black rounded font-semibold font-mono'>
 
             <li id="timerInput" className="">
-                <div className="font-semibold text-white py-2">
+                <div className="font-semibold text-white py-1">
                     Input Time
                 </div>
                 <TimeInput sendTimeInput={sendTimeInput}/>
             </li>
             <li>
-                <div className="font-semibold text-white py-2">
+                <div className="font-semibold text-white py-1">
                     Preset Input
                 </div>
-                <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20 py-1 mx-2 my-2 font-semibold font-mono' onClick={onClickFive}>5:00</button>
-                <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20 py-1 mx-2 my-2 font-semibold font-mono' onClick={onClickFour}>4:00</button>
+                <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20 py-1 mx-2 my-1 font-semibold font-mono' onClick={onClickFive}>5:00</button>
+                <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20 py-1 mx-2 my-1 font-semibold font-mono' onClick={onClickFour}>4:00</button>
             </li>
             <li>
             <div>
                 <div className="font-semibold text-white py-2">
                     Preset Increments
                 </div>
-                <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md  py-1 mx-2 my-2 font-bold h-9 w-20  ' onClick={onClickIncrement}>+</button>
-                <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md  py-1 mx-2 my-2 font-bold h-9 w-20  ' onClick={onClickDecrement}>-</button>
-                <div onChange={onChangeValue} className='text-white font-semibold font-mono text-xl'>
+                <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md   mx-2  font-bold h-9 w-20  ' onClick={onClickIncrement}>+</button>
+                <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md   mx-2  font-bold h-9 w-20  ' onClick={onClickDecrement}>-</button>
+                <div onChange={onChangeValue} className='text-white font-semibold font-mono text-xl py-2'>
                     <input type="radio" value="00:00:15" defaultChecked name="radioVal" className="w-4 h-4 accent-[#73f3eb]" /> 15s
                     <input type="radio" value="00:00:30" name="radioVal" className="w-4 h-4"/> 30s
                     <input type="radio" value="00:00:45" name="radioVal" className="w-4 h-4"/> 45s

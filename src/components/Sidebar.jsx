@@ -1,3 +1,5 @@
+'use client'
+
 import {FaBars} from "react-icons/fa";
 import React, { useEffect, useState } from "react";
 import TimeInput from "../TimeInput";

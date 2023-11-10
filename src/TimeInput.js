@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import getSecondsFromHHMMSS from "./actions/getSecondsFromHHMMSS";
 import setToHHMMSS from "./actions/setToHHMMSS";

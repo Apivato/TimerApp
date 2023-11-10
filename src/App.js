@@ -207,7 +207,7 @@ function App() {
 
   return (
     
-    <div className='bg-graphicImage h-screen bg-cover bg-no-repeat bg-center bg-fixed overflow-y-auto transition '>
+    <div className='bg-graphicImage h-screen bg-cover bg-no-repeat bg-center bg-fixed transition '>
       {/* ^global container div */}
       {/* input container div */}
 
@@ -221,7 +221,7 @@ function App() {
 
       <div id="main" className="App h-screen max-w-full ">
         {/* Output container div */}
-        <div className='text-8xl lg:text-[180px] items-center justify-center grid text-white font-semibold font-mono transition-all duration-300'>
+        <div className='text-8xl lg:text-[180px] items-center justify-center grid  text-white font-semibold font-mono transition-all duration-300'>
           {
               <h1 className=' lg:h-48 lg:px-16 rounded-full bg-black opacity-95 text lg:py-26 '>
                 {" "}

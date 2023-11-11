@@ -215,23 +215,22 @@ function App() {
         {/*Sidebar */}
         <Sidebar toggleReset={updateReset} toggleRestart={updateRestart} sideBarToTimer={valueToTimer} onClickFive={onClickFive} onClickFour={onClickFour} onClickDecrement={onClickDecrement} onClickIncrement={onClickIncrement} onChangeValue={onChangeValue}/>
       </div>
-      <div className="m-40">
+      {/* <div className="lg:my-35">
 
-      </div>
+      </div> */}
 
-      <div id="main" className="App h-screen max-w-full ">
+      <div id="main" className='App h-screen max-w-full xl:m-28 lg:m-28 md:m-18 sm:m-20 m-10'>
         {/* Output container div */}
-        <div className='text-8xl lg:text-[260px] items-center justify-center grid  text-white font-semibold font-mono transition-all duration-400'>
+        <div className='text-8xl lg:text-[250px] lg:px-16 lg:py-16 md:text-[200px] items-center justify-center grid text-white font-semibold font-mono transition-all duration-400'>
           {
-              <h1 className=' lg:h-64 lg:px-16 rounded-full bg-black opacity-95 text lg:py-30 '>
-                {" "}
+              <h1 className='rounded-full bg-black opacity-95'>
                 {hours}:{minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds}
               </h1>
           }
         </div>
 
         {/* Button Container div */}
-        <div className='w-full items-center text-lg lg:my-6 font-semibold font-mono transition-all duration-300'>
+        <div className='w-full items-center text-lg lg:my-5 md:my-4 sm:my-3 font-semibold font-mono transition-all duration-300'>
           <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20 py-1 mx-2 my-2 font-semibold font-mono' onClick={startStop}>{isPause ? "Stop" : "Start"}</button>
           <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20 py-1 mx-2 my-2 font-semibold font-mono' onClick={onClickReset}>Reset</button>
           

@@ -54,9 +54,9 @@ const Sidebar = ({sideBarToTimer, toggleReset, toggleRestart, onClickFive, onCli
                 <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md   mx-2  font-bold h-9 w-20  ' onClick={onClickDecrement}>-</button>
                 <div onChange={onChangeValue} className='text-white font-semibold font-mono text-xl py-2'>
                     <input type="radio" value="00:00:15" defaultChecked name="radioVal" className="w-4 h-4 accent-[#73f3eb]" /> 15s
-                    <input type="radio" value="00:00:30" name="radioVal" className="w-4 h-4"/> 30s
-                    <input type="radio" value="00:00:45" name="radioVal" className="w-4 h-4"/> 45s
-                    <input type="radio" value="00:01:00" name="radioVal" className="w-4 h-4"/> 1m
+                    <input type="radio" value="00:00:30" name="radioVal" className="w-4 h-4 accent-[#73f3eb]"/> 30s
+                    <input type="radio" value="00:00:45" name="radioVal" className="w-4 h-4 accent-[#73f3eb]"/> 45s
+                    <input type="radio" value="00:01:00" name="radioVal" className="w-4 h-4 accent-[#73f3eb]"/> 1m
                 </div>
           </div>
             </li>

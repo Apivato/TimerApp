@@ -11,6 +11,8 @@ export default function TimeInput({sendTimeInput}) {
     const onChange = (event) => {
       setValue(event.target.value);
     };
+
+    const handleFocus = (event) => event.target.select();
   
     const onBlur = (event) => {
       const value = event.target.value;
@@ -21,6 +23,6 @@ export default function TimeInput({sendTimeInput}) {
     };
 
     return (
-      <input type="text" onBlur={onBlur} onChange={onChange} value={value} />
+      <input type="text" onBlur={onBlur} onChange={onChange} value={value} maxLength={8} onFocus={handleFocus}/>
     );
   }

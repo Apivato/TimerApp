@@ -8,8 +8,8 @@ import { ToggleSlider } from "react-toggle-slider";
 
 const Sidebar = ({sideBarToTimer, toggleReset, toggleRestart, onClickFive, onClickFour, onClickIncrement, onClickDecrement, onChangeValue}) => {
     const [isOpen, setOpen] = useState(false)
-    const [resetActive, setResetActive] = useState(false);
-    const [restartActive, setRestartActive] = useState(false);
+    const [resetActive, setResetActive] = useState(true);
+    const [restartActive, setRestartActive] = useState(true);
 
 
     const sendTimeInput = (inputValue) =>{
@@ -62,18 +62,18 @@ const Sidebar = ({sideBarToTimer, toggleReset, toggleRestart, onClickFive, onCli
             </li>
             <li id="mode1">
                 <div className="text-white font-semibold py-2">
-                    Auto Reset
+                    Auto Restart
                 </div>
-                {/* <ToggleSlider onToggle={state => setResetActive(state)} draggable={false} barBackgroundColorActive={"#73f3eb"} active={resetActive} /> */}
-                <input type="checkbox" onChange={state => setResetActive(state)}/>
+                <ToggleSlider onToggle={state => setResetActive(!state)} draggable={false} barBackgroundColorActive={"#73f3eb"} active={!resetActive} />
+                {/* <input type="checkbox" onChange={state => setResetActive(state)}/> */}
             </li>
 
             <li id="mode2">
                 <div className="text-white font-semibold py-2">
-                    Auto Restart
+                    Auto Reset
                 </div>
-                <input type="checkbox" onChange={state => setRestartActive(state)}/>
-                {/* <ToggleSlider onToggle={state => setRestartActive(state)} draggable={false} barBackgroundColorActive={"#73f3eb"} active={restartActive}/> */}
+                {/* <input type="checkbox" onChange={state => setRestartActive(state)}/> */}
+                <ToggleSlider onToggle={state => setRestartActive(!state)} draggable={false} barBackgroundColorActive={"#73f3eb"} active={!restartActive}/>
             </li>
         </ul>
         )}

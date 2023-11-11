@@ -64,14 +64,16 @@ const Sidebar = ({sideBarToTimer, toggleReset, toggleRestart, onClickFive, onCli
                 <div className="text-white font-semibold py-2">
                     Auto Reset
                 </div>
-                <ToggleSlider onToggle={state => setResetActive(state)} draggable={false} barBackgroundColorActive={"#73f3eb"} active={resetActive} />
+                {/* <ToggleSlider onToggle={state => setResetActive(state)} draggable={false} barBackgroundColorActive={"#73f3eb"} active={resetActive} /> */}
+                <input type="checkbox" onChange={state => setResetActive(state)}/>
             </li>
 
             <li id="mode2">
                 <div className="text-white font-semibold py-2">
                     Auto Restart
                 </div>
-                <ToggleSlider onToggle={state => setRestartActive(state)} draggable={false} barBackgroundColorActive={"#73f3eb"} active={restartActive}/>
+                <input type="checkbox" onChange={state => setRestartActive(state)}/>
+                {/* <ToggleSlider onToggle={state => setRestartActive(state)} draggable={false} barBackgroundColorActive={"#73f3eb"} active={restartActive}/> */}
             </li>
         </ul>
         )}

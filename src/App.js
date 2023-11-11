@@ -78,7 +78,8 @@ function App() {
       setIsRunning(false);
       setIsPause(false);
     } else{
-      if (start !== "00:00:00"){
+      var currTime = getCurrTime();
+      if (start !== "00:00:00" && currTime !== "0:0:0"){
         intervalRef.current = setInterval(decreaseTime, 1000);
         setIsRunning(true);
         setIsPause(true);
@@ -160,7 +161,7 @@ function App() {
 
 
   useEffect(() => {
-    if(seconds === 0 && minutes === 0 && hours === 0 && isRunning) 
+    if(seconds === 0 && minutes === 0 && hours === 0 && isRunning && !done) 
     {
       setDone(true);
       playLong();

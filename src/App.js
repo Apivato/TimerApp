@@ -34,8 +34,6 @@ function App() {
   }
 
 
-
-
   const valueToTimer = (inputValue) => {
     if (!isRunning){
       setStart(inputValue);
@@ -46,8 +44,6 @@ function App() {
     const h = Number(str1);
     const m = Number(str2);
     const s = Number(str3);
-
-    // const [h, m, s] = toNum(inputValue);
 
     if (!isNaN(h) && !isNaN(m) && !isNaN(s)) {
       setHours(parseInt(h,10));
@@ -207,33 +203,31 @@ function App() {
   }, [seconds, minutes, hours, isRunning, done])
 
   return (
-    
-    <div className='bg-graphicImage h-screen bg-cover bg-no-repeat bg-center bg-fixed transition '>
-      {/* ^global container div */}
+    <div className='relative h-screen max-h-screen bg-graphicImage bg-cover bg-no-repeat bg-center transition '>
+      {/* ^global container div  bg-contain bg-graphicImage*/}
       {/* input container div */}
 
-      <div id="mySidenav" className='p-4'>
+      <div id="mySidenav" className='fixed z-20'>
         {/*Sidebar */}
         <Sidebar toggleReset={updateReset} toggleRestart={updateRestart} sideBarToTimer={valueToTimer} onClickFive={onClickFive} onClickFour={onClickFour} onClickDecrement={onClickDecrement} onClickIncrement={onClickIncrement} onChangeValue={onChangeValue}/>
       </div>
-      {/* <div className="lg:my-35">
 
-      </div> */}
-
-      <div id="main" className='App h-screen max-w-full xl:m-28 lg:m-28 md:m-18 sm:m-20 m-10'>
+      
+      <div id="main" className='fixed m-auto inset-x-0 inset-y-0 h-1/2 w-1/2 flex flex-col items-center'>
         {/* Output container div */}
-        <div className='text-8xl lg:text-[250px] lg:px-16 lg:py-16 md:text-[200px] items-center justify-center grid text-white font-semibold font-mono transition-all duration-400'>
+        {/* lg:px-16 lg:py-16 */}
+        <div className='text-8xl lg:text-[250px] md:text-[200px] items-center text-white font-semibold font-mono transition-all duration-400'>
           {
-              <h1 className='rounded-full bg-black opacity-95'>
+              <h1 className='rounded-full bg-black'>
                 {hours}:{minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds}
               </h1>
           }
         </div>
 
         {/* Button Container div */}
-        <div className='w-full items-center text-lg lg:my-5 md:my-4 sm:my-3 font-semibold font-mono transition-all duration-300'>
-          <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20 py-1 mx-2 my-2 font-semibold font-mono' onClick={startStop}>{isPause ? "Stop" : "Start"}</button>
-          <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20 py-1 mx-2 my-2 font-semibold font-mono' onClick={onClickReset}>Reset</button>
+        <div className='items-center text-lg font-semibold font-mono transition-all duration-300'>
+          <button className='hover:border-white active:bg-[#60cbc4] bg-[#73f3eb] border-black border-2 rounded-md w-20 py-1 mx-2 my-2' onClick={startStop}>{isPause ? "Stop" : "Start"}</button>
+          <button className='hover:border-white active:bg-[#60cbc4] bg-[#73f3eb] border-black border-2 rounded-md w-20 py-1 mx-2 my-2' onClick={onClickReset}>Reset</button>
           
         </div>
         

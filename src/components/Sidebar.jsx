@@ -8,7 +8,7 @@ import { ToggleSlider } from "react-toggle-slider";
 import { Transition } from '@headlessui/react'
 
 
-const Sidebar = ({sideBarToTimer, toggleReset, toggleRestart, onClickFive, onClickFour, onClickIncrement, onClickDecrement, onChangeValue, toggleWillBeep, toggleColorChange}) => {
+const Sidebar = ({sideBarToTimer, toggleReset, toggleRestart, onClickFive, onClickFour, onClickIncrement, onClickDecrement, onChangeValue}) => {
     const [isOpen, setOpen] = useState(false)
     const [resetActive, setResetActive] = useState(true);
     const [restartActive, setRestartActive] = useState(true);
@@ -27,13 +27,14 @@ const Sidebar = ({sideBarToTimer, toggleReset, toggleRestart, onClickFive, onCli
         toggleRestart();  
     },[restartActive]);
 
-    useEffect(() => {
-        toggleColorChange();  
-    },[colorChange]);
+    // useEffect(() => {
+    //     toggleColorChange();  
+    // },[colorChange]);
     
-    useEffect(() => {
-        toggleWillBeep();  
-    },[willBeep]);
+    // useEffect(() => {
+    //     toggleWillBeep();  
+    // },[willBeep]);
+    //, toggleWillBeep, toggleColorChange
     // px-7 py-11 bg-graphicImage md:h-8 md:w-8 z-20 p-6 m-6 absolute top-5 left-5
 
     return(

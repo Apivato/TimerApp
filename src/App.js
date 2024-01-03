@@ -216,10 +216,11 @@ function App() {
       <div id="main" className='fixed m-auto inset-x-0 inset-y-0 h-1/2 w-1/2 flex flex-col items-center'>
         {/* Output container div */}
         {/* lg:px-16 lg:py-16 */}
-        <div className='text-8xl lg:text-[250px] md:text-[200px] items-center text-white font-semibold font-mono transition-all duration-400'>
+        <div className='text-[275px] items-center text-white font-semibold font-mono transition-all duration-400'>
+        {/* sm:text-sm md:text-md lg:text-lg xl:text-xl 2xl:text-2xl */}
           {
               <h1 className='rounded-full bg-black'>
-                {hours}:{minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds}
+                {hours < 10 ? `0${hours}`: hours}:{minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds}
               </h1>
           }
         </div>

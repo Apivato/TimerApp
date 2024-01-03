@@ -41,7 +41,7 @@ const Sidebar = ({sideBarToTimer, toggleReset, toggleRestart, onClickFive, onCli
 
     <div className=''>
         <div className='absolute top-5 left-5'>
-            {!isOpen && <FaBars onClick={() => setOpen(!isOpen)} className=' scale-125 cursor-pointer hover:opacity-75 md:h-8 md:w-8 transition-all duration-300' color='white'/>}
+            {!isOpen && <FaBars onClick={() => setOpen(!isOpen)} className=' scale-125 cursor-pointer hover:opacity-75 2xl:h-8 2xl:w-8 transition-all duration-300' color='white'/>}
         </div>
         <Transition
             show={isOpen}
@@ -53,7 +53,7 @@ const Sidebar = ({sideBarToTimer, toggleReset, toggleRestart, onClickFive, onCli
             leaveTo="opacity-0 -translate-x-12"
         >
         <div className=' bg-opacity-90 bg-black p-6 transition-all duration-300 font-semibold font-mono flex flex-col flex-grow h-screen max-h-screen overflow-y-auto'>
-            <div><FaArrowLeft onClick={() => setOpen(!isOpen)} className='scale-125 cursor-pointer hover:opacity-75 md:h-8 md:w-8 transition-all duration-300' color='white'/></div>
+            <div><FaArrowLeft onClick={() => setOpen(!isOpen)} className='scale-125 cursor-pointer hover:opacity-75 2xl:h-8 2xl:w-8 transition-all duration-300' color='white'/></div>
             <div id="timerInput">
                 <div className='font-semibold text-white py-1'>
                     Input Time
@@ -73,7 +73,7 @@ const Sidebar = ({sideBarToTimer, toggleReset, toggleRestart, onClickFive, onCli
                 </div>
                 <button className='hover:border-white active:bg-[#60cbc4] bg-[#73f3eb] border-black border-2 rounded-md   mx-2  font-bold h-9 w-20  ' onClick={onClickIncrement}>+</button>
                 <button className='hover:border-white active:bg-[#60cbc4] bg-[#73f3eb] border-black border-2 rounded-md   mx-2  font-bold h-9 w-20  ' onClick={onClickDecrement}>-</button>
-                <div onChange={onChangeValue} className='text-white font-semibold font-mono text-xl py-2'>
+                <div onChange={onChangeValue} className='text-white font-semibold font-mono py-2'>
                     <input type="radio" value="00:00:15" defaultChecked name="radioVal" className="w-4 h-4 accent-[#73f3eb]" /> 15s
                     <input type="radio" value="00:00:30" name="radioVal" className="w-4 h-4 accent-[#73f3eb]"/> 30s
                     <input type="radio" value="00:00:45" name="radioVal" className="w-4 h-4 accent-[#73f3eb]"/> 45s

@@ -205,19 +205,17 @@ function App() {
   return (
     <div className='relative h-screen max-h-screen bg-graphicImage bg-cover bg-no-repeat bg-center transition '>
       {/* ^global container div  bg-contain bg-graphicImage*/}
+      
       {/* input container div */}
-
       <div id="mySidenav" className='fixed z-20'>
         {/*Sidebar */}
         <Sidebar toggleReset={updateReset} toggleRestart={updateRestart} sideBarToTimer={valueToTimer} onClickFive={onClickFive} onClickFour={onClickFour} onClickDecrement={onClickDecrement} onClickIncrement={onClickIncrement} onChangeValue={onChangeValue}/>
       </div>
 
-      
+      {/* interface container div */}
       <div id="main" className='fixed m-auto inset-x-0 inset-y-0 h-1/2 w-1/2 flex flex-col items-center'>
         {/* Output container div */}
-        {/* lg:px-16 lg:py-16 */}
-        <div className='text-[275px] items-center text-white font-semibold font-mono transition-all duration-400'>
-        {/* sm:text-sm md:text-md lg:text-lg xl:text-xl 2xl:text-2xl */}
+        <div className='text-xxs xs:text-xs sm:text-sm md:text-md lg:text-lg xl:text-xl 2xl:text-2xl 3xl:text-3xl 4xl:text-4xl 5xl:text-5xl 6xl:text-6xl text-white font-semibold font-mono transition-all duration-400'>
           {
               <h1 className='rounded-full bg-black'>
                 {hours < 10 ? `0${hours}`: hours}:{minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds}
@@ -226,7 +224,7 @@ function App() {
         </div>
 
         {/* Button Container div */}
-        <div className='items-center text-lg font-semibold font-mono transition-all duration-300'>
+        <div className='flex font-semibold font-mono transition-all duration-300'>
           <button className='hover:border-white active:bg-[#60cbc4] bg-[#73f3eb] border-black border-2 rounded-md w-20 py-1 mx-2 my-2' onClick={startStop}>{isPause ? "Stop" : "Start"}</button>
           <button className='hover:border-white active:bg-[#60cbc4] bg-[#73f3eb] border-black border-2 rounded-md w-20 py-1 mx-2 my-2' onClick={onClickReset}>Reset</button>
           

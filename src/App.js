@@ -207,13 +207,19 @@ function App() {
       {/* ^global container div  bg-contain bg-graphicImage*/}
       
       {/* input container div */}
-      <div id="mySidenav" className='fixed z-20'>
-        {/*Sidebar */}
-        <Sidebar toggleReset={updateReset} toggleRestart={updateRestart} sideBarToTimer={valueToTimer} onClickFive={onClickFive} onClickFour={onClickFour} onClickDecrement={onClickDecrement} onClickIncrement={onClickIncrement} onChangeValue={onChangeValue}/>
-      </div>
+      <div id="mySidenav" className='fixed z-20 ' >
+          {/*Sidebar */}
+          <Sidebar toggleReset={updateReset} toggleRestart={updateRestart} sideBarToTimer={valueToTimer} onClickFive={onClickFive} onClickFour={onClickFour} onClickDecrement={onClickDecrement} onClickIncrement={onClickIncrement} onChangeValue={onChangeValue}/>
+        </div>
 
+      <header className='flex items-center w-screen'>
+        {/* Logo Title */}
+        <div className='mx-auto h-1/6 w-1/6'>
+            <img src="../diagonal-logo-white.png" alt="Full Logo UTB"></img>
+        </div>
+      </header>
       {/* interface container div */}
-      <div id="main" className='fixed m-auto inset-x-0 inset-y-0 h-1/2 w-1/2 flex flex-col items-center'>
+      <div id="main" className='fixed mx-auto my-auto inset-x-0 inset-y-0 h-1/2 w-1/2 flex flex-col items-center'>
         {/* Output container div */}
         <div className='text-xxs xs:text-xs sm:text-sm md:text-md lg:text-lg xl:text-xl 2xl:text-2xl 3xl:text-3xl 4xl:text-4xl 5xl:text-5xl 6xl:text-6xl text-white font-semibold font-mono transition-all duration-400'>
           {

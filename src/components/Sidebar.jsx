@@ -108,7 +108,7 @@ const Sidebar = ({sideBarToTimer, toggleReset, toggleRestart, onClickFive, onCli
                 <input className="w-4 h-4 accent-[#73f3eb]" type="checkbox" onChange={state => setColorChange(state)}/>
             </div>
             <div className="h-24 w-48">
-                <img src="../logo-white.png" alt="Full Logo UTB"></img>
+                <img src="../diagonal-logo-white.png" alt="Full Logo UTB"></img>
             </div>
         </div>
         </Transition>

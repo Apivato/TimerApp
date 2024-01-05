@@ -204,26 +204,32 @@ function App() {
 
   return (
     <div className='relative h-screen max-h-screen bg-graphicImage bg-cover bg-no-repeat bg-center transition '>
-      {/* ^global container div  bg-contain bg-graphicImage*/}
+      {/* ^global container div  bg-contain bg-graphicImage bg-black*/}
       
       {/* input container div */}
-      <div id="mySidenav" className='fixed z-20 ' >
+      {/* <div id="mySidenav" className='fixed z-20 ' > */}
           {/*Sidebar */}
-          <Sidebar toggleReset={updateReset} toggleRestart={updateRestart} sideBarToTimer={valueToTimer} onClickFive={onClickFive} onClickFour={onClickFour} onClickDecrement={onClickDecrement} onClickIncrement={onClickIncrement} onChangeValue={onChangeValue}/>
-        </div>
+          {/* <Sidebar toggleReset={updateReset} toggleRestart={updateRestart} sideBarToTimer={valueToTimer} onClickFive={onClickFive} onClickFour={onClickFour} onClickDecrement={onClickDecrement} onClickIncrement={onClickIncrement} onChangeValue={onChangeValue}/>
+      </div> */}
 
-      <header className='flex items-center w-screen'>
+      <header className='w-screen'>
+        <div id="mySidenav" className='fixed z-20' >
+            {/*Sidebar */}
+            <Sidebar toggleReset={updateReset} toggleRestart={updateRestart} sideBarToTimer={valueToTimer} onClickFive={onClickFive} onClickFour={onClickFour} onClickDecrement={onClickDecrement} onClickIncrement={onClickIncrement} onChangeValue={onChangeValue}/>
+        </div>
         {/* Logo Title */}
-        <div className='mx-auto h-1/6 w-1/6'>
-            <img src="../diagonal-logo-white.png" alt="Full Logo UTB"></img>
+        <div className='absolute top-5 right-5 h-1/12 w-1/12'>
+            <img class='' src="../logo-white.png" alt="Full Logo UTB"></img>
         </div>
       </header>
       {/* interface container div */}
       <div id="main" className='fixed mx-auto my-auto inset-x-0 inset-y-0 h-1/2 w-1/2 flex flex-col items-center'>
         {/* Output container div */}
         <div className='text-xxs xs:text-xs sm:text-sm md:text-md lg:text-lg xl:text-xl 2xl:text-2xl 3xl:text-3xl 4xl:text-4xl 5xl:text-5xl 6xl:text-6xl text-white font-semibold font-mono transition-all duration-400'>
+        {/* text-black text-white*/}
           {
-              <h1 className='rounded-full bg-black'>
+              <h1 className='rounded-full bg-black px-3'>
+                {/* rounded-full bg-black bg-[#73f3eb] rounded-3xl*/}
                 {hours < 10 ? `0${hours}`: hours}:{minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds}
               </h1>
           }

@@ -111,6 +111,9 @@ const Sidebar = ({sideBarToTimer, toggleReset, toggleRestart, onClickFive, onCli
                 <img src="../diagonal-logo-white.png" alt="Full Logo UTB"></img>
             </div>
         </div>
+        <div>
+            
+        </div>
         </Transition>
     </div>
     );

@@ -28,7 +28,7 @@ function App() {
   const [isReset, setIsReset] = useState(false);
   const [isRestart, setIsRestart] = useState(false);
   
-  const [warningBeep, setWarningBeep] = useState(true);
+  const [warningBeep, setWarningBeep] = useState(false);
   const [colorTime, setColorTime] = useState({s:0, m:0, h:0});
   const [warningColor, setWarningColor] = useState(false);
   const [changeColor, setChangeColor] = useState(false);

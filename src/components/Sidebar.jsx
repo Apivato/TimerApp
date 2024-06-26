@@ -108,12 +108,12 @@ const Sidebar = ({sideBarToTimer, toggleReset, toggleRestart, onClickFive, onCli
                 </div>
                 <div className='text-white font-semibold py-2'>
                     warning Beep (@5s)
-                    <input className="mx-2 w-4 h-4 accent-[#73f3eb]" type="checkbox" defaultChecked onChange={state => setWarningBeep(state)}/>
+                    <ToggleSlider className="mx-2 w-4 h-4" barBackgroundColorActive={"#73f3eb"} draggable={false} defaultChecked onToggle={state => setWarningBeep(state)} active={warningBeep}/>
                 </div>
                 {/* <TimeInput className='' sendTimeInput={sendBeepWarningInput}/> */}
                 <div className='text-white font-semibold py-2'>
                     warning color (Red)
-                    <input className="mx-2 w-4 h-4 accent-[#73f3eb]" type="checkbox" onChange={state => setWarningcolor(state)}/>
+                    <ToggleSlider className="mx-2 w-4 h-4" barBackgroundColorActive={"#73f3eb"} draggable={false} onToggle={state => setWarningcolor(state)} active={warningColor}/>
                 </div>
                 <TimeInput className='' sendTimeInput={sendColorWarningInput}/>
             </div>

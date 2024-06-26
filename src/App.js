@@ -189,6 +189,9 @@ function App() {
       if (warningBeep){
         playLong();
       }
+      if (warningColor){
+        colorRef.current.style.color = "white";
+      }
     }
   }, [seconds, minutes, hours, isRunning, done]);
 
@@ -237,9 +240,6 @@ function App() {
     const s = Number(colorTime["s"]);
     if (seconds === s  && minutes === m && hours === h && isRunning && !done && warningColor){
       colorRef.current.style.color = "red";
-    }
-    else if (!isRunning && done) {
-      colorRef.current.style.color = "white";
     }
   }, [seconds, minutes, hours, isRunning, done, colorTime]);
 

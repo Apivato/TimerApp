@@ -12,7 +12,7 @@ const Sidebar = ({sideBarToTimer, toggleReset, toggleRestart, onClickFive, onCli
     const [isOpen, setOpen] = useState(false)
     const [resetActive, setResetActive] = useState(true);
     const [restartActive, setRestartActive] = useState(true);
-    const [warningBeep, setWarningBeep] = useState(false);
+    const [warningBeep, setWarningBeep] = useState(true);
     const [warningColor, setWarningcolor] = useState(true);
 
     const sendTimeInput = (inputValue) =>{
@@ -108,7 +108,7 @@ const Sidebar = ({sideBarToTimer, toggleReset, toggleRestart, onClickFive, onCli
                 </div>
                 <div className='text-white font-semibold py-2'>
                     warning Beep (@5s)
-                    <ToggleSlider className="mx-2 w-4 h-4" barBackgroundColorActive={"#73f3eb"} draggable={false} defaultChecked onToggle={state => setWarningBeep(state)} active={warningBeep}/>
+                    <ToggleSlider className="mx-2 w-4 h-4" barBackgroundColorActive={"#73f3eb"} draggable={false} onToggle={state => setWarningBeep(state)} active={warningBeep}/>
                 </div>
                 {/* <TimeInput className='' sendTimeInput={sendBeepWarningInput}/> */}
                 <div className='text-white font-semibold py-2'>

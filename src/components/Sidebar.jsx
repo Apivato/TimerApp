@@ -12,8 +12,8 @@ const Sidebar = ({sideBarToTimer, toggleReset, toggleRestart, onClickFive, onCli
     const [isOpen, setOpen] = useState(false)
     const [resetActive, setResetActive] = useState(true);
     const [restartActive, setRestartActive] = useState(true);
-    const [warningBeep, setWarningBeep] = useState(true);
-    const [warningColor, setWarningcolor] = useState(false);
+    const [warningBeep, setWarningBeep] = useState(false);
+    const [warningColor, setWarningcolor] = useState(true);
 
     const sendTimeInput = (inputValue) =>{
         sideBarToTimer(inputValue);

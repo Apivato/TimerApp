@@ -1,13 +1,17 @@
 'use client'
 
 import './App.css';
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect } from 'react';
+import { FaChevronDown } from "react-icons/fa";
 import useSound from 'use-sound';
 import shortBeep from './ShortBeep.wav';
 import longBeep from './LongBeep.wav';
 import Sidebar from './components/Sidebar'
 import getSecondsFromHHMMSS from "./actions/getSecondsFromHHMMSS";
 import setToHHMMSS from "./actions/setToHHMMSS";
+
+//what can be optimized, the status of sidebar elements being sent over as states vs the truthiness value
+
 
 function App() {
 
@@ -21,19 +25,24 @@ function App() {
   const [isRunning, setIsRunning] = useState(false);
   const [isPause, setIsPause] = useState(false);
 
-  const [isReset, setIsReset] = useState(false)
-  const [isRestart, setIsRestart] = useState(false)
+  const [isReset, setIsReset] = useState(false);
+  const [isRestart, setIsRestart] = useState(false);
   
+  const [warningBeep, setWarningBeep] = useState(true);
+  const [colorTime, setColorTime] = useState({s:0, m:0, h:0});
+  const [warningColor, setWarningColor] = useState(false);
+  const [changeColor, setChangeColor] = useState(false);
+
+
   let intervalRef = useRef();
   let secondsRef = useRef();
+  let colorRef = useRef();
 
   secondsRef.current = [seconds, minutes, hours];
 
   const getCurrTime = () => {
     return secondsRef.current[2]+":"+secondsRef.current[1]+":"+secondsRef.current[0];
   }
-
-
 
 
   const valueToTimer = (inputValue) => {
@@ -46,8 +55,6 @@ function App() {
     const h = Number(str1);
     const m = Number(str2);
     const s = Number(str3);
-
-    // const [h, m, s] = toNum(inputValue);
 
     if (!isNaN(h) && !isNaN(m) && !isNaN(s)) {
       setHours(parseInt(h,10));
@@ -95,6 +102,20 @@ function App() {
 
     setRadioVal(checkedRadio.value);
   }
+
+  const colorToggle = () => {
+    setWarningColor(prev => !prev);
+  }
+
+  const colorTimeInput = (inputValue) => {
+    const [str1, str2, str3] = inputValue.split(":");
+    setColorTime({s:str3, m:str2, h:str1});
+    console.log(colorTime);
+  }
+
+  const beepToggle = () => {
+    setWarningBeep(prev => !prev);
+  }
   
   const onClickDecrement = () => {
     if (start !== "00:00:00"){
@@ -141,6 +162,7 @@ function App() {
   }
 
   const onClickReset = () => {
+    reset();
     valueToTimer(start);
    };
  
@@ -164,7 +186,9 @@ function App() {
     if(seconds === 0 && minutes === 0 && hours === 0 && isRunning && !done) 
     {
       setDone(true);
-      playLong();
+      if (warningBeep){
+        playLong();
+      }
     }
   }, [seconds, minutes, hours, isRunning, done]);
 
@@ -201,40 +225,71 @@ function App() {
   const [playLong] = useSound(longBeep, { volume: 0.25 });
 
   useEffect(() => {
-    if (seconds <= 5 && seconds > 0 && minutes === 0 && hours === 0 && isRunning && !done){
+    if (seconds <= 5 && seconds > 0 && minutes === 0 && hours === 0 && isRunning && !done && warningBeep){
       playShort();
     }
   }, [seconds, minutes, hours, isRunning, done])
 
+  useEffect(() => {
+
+    const h = Number(colorTime["h"]);
+    const m = Number(colorTime["m"]);
+    const s = Number(colorTime["s"]);
+    if (seconds === s  && minutes === m && hours === h && isRunning && !done && warningColor){
+      colorRef.current.style.color = "red";
+    }
+    else if (!isRunning && done) {
+      colorRef.current.style.color = "white";
+    }
+  }, [seconds, minutes, hours, isRunning, done, colorTime]);
+
+
   return (
-    
-    <div className='bg-graphicImage h-screen bg-cover bg-no-repeat bg-center bg-fixed transition '>
-      {/* ^global container div */}
+    <div className='relative h-screen max-h-screen bg-graphicImage bg-cover bg-no-repeat bg-center transition '>
+      {/* ^global container div  bg-contain bg-graphicImage bg-black*/}
+      
       {/* input container div */}
-
-      <div id="mySidenav" className='p-4'>
-        {/*Sidebar */}
-        <Sidebar toggleReset={updateReset} toggleRestart={updateRestart} sideBarToTimer={valueToTimer} onClickFive={onClickFive} onClickFour={onClickFour} onClickDecrement={onClickDecrement} onClickIncrement={onClickIncrement} onChangeValue={onChangeValue}/>
-      </div>
-      {/* <div className="lg:my-35">
-
+      {/* <div id="mySidenav" className='fixed z-20 ' > */}
+          {/*Sidebar */}
+          {/* <Sidebar toggleReset={updateReset} toggleRestart={updateRestart} sideBarToTimer={valueToTimer} onClickFive={onClickFive} onClickFour={onClickFour} onClickDecrement={onClickDecrement} onClickIncrement={onClickIncrement} onChangeValue={onChangeValue}/>
       </div> */}
 
-      <div id="main" className='App h-screen max-w-full xl:m-28 lg:m-28 md:m-18 sm:m-20 m-10'>
+      <header className='w-screen'>
+        <div id="mySidenav" className='fixed z-20' >
+            {/*Sidebar */}
+            <Sidebar toggleReset={updateReset} toggleRestart={updateRestart} sideBarToTimer={valueToTimer} onClickFive={onClickFive} onClickFour={onClickFour} onClickDecrement={onClickDecrement} onClickIncrement={onClickIncrement} onChangeValue={onChangeValue} toggleColorWarning={colorToggle} colorWarningTime={colorTimeInput} toggleBeepWarning={beepToggle}/>
+        </div>
+        {/* Logo Title */}
+        <div className='absolute top-5 right-5 h-1/12 w-1/12'>
+            <img class='' src="../logo-white.png" alt="Full Logo UTB"></img>
+        </div>
+      </header>
+      {/* interface container div */}
+      <div id="main" className='fixed mx-auto my-auto inset-x-0 inset-y-0 h-1/2 w-1/2 flex flex-col items-center'>
         {/* Output container div */}
-        <div className='text-8xl lg:text-[250px] lg:px-16 lg:py-16 md:text-[200px] items-center justify-center grid text-white font-semibold font-mono transition-all duration-400'>
+        <div ref={colorRef} className='timerText text-xxs xs:text-xs sm:text-sm md:text-md lg:text-lg xl:text-xl 2xl:text-2xl 3xl:text-3xl 4xl:text-4xl 5xl:text-5xl 6xl:text-6xl text-white font-semibold font-mono transition-all duration-400'>
+        {/* text-black text-white*/}
           {
-              <h1 className='rounded-full bg-black opacity-95'>
-                {hours}:{minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds}
+              <h1 className='rounded-full bg-black px-3'>
+                {/* rounded-full bg-black bg-[#73f3eb] rounded-3xl*/}
+                {hours < 10 ? `0${hours}`: hours}:{minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds}
               </h1>
           }
         </div>
 
         {/* Button Container div */}
-        <div className='w-full items-center text-lg lg:my-5 md:my-4 sm:my-3 font-semibold font-mono transition-all duration-300'>
-          <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20 py-1 mx-2 my-2 font-semibold font-mono' onClick={startStop}>{isPause ? "Stop" : "Start"}</button>
-          <button className='hover:border-black bg-[#73f3eb] border-2 rounded-md w-20 py-1 mx-2 my-2 font-semibold font-mono' onClick={onClickReset}>Reset</button>
-          
+        <div className=' transition-all ease-in-out'>
+          <details className='group'> 
+          <div className='group-open:-translate-y-9 font-semibold font-mono'>
+            <button className='hover:border-white active:bg-[#60cbc4] bg-[#73f3eb] border-black border-2 rounded-md w-20 py-1 mx-2 my-2' onClick={startStop}>{isPause ? "Stop" : "Start"}</button>
+            <button className='hover:border-white active:bg-[#60cbc4] bg-[#73f3eb] border-black border-2 rounded-md w-20 py-1 mx-2 my-2' onClick={onClickReset}>Reset</button>
+          </div>
+          <summary className="flex list-none justify-center group-open:translate-y-10 group-open:transition-transform duration-300">
+            <div>
+              <FaChevronDown className=' group-open:-rotate-180 scale-125 cursor-pointer hover:opacity-75 2xl:h-8 2xl:w-8 transition-all duration-300' color='white'/>
+            </div>
+          </summary>
+        </details>
         </div>
         
       </div>

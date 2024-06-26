@@ -8,16 +8,25 @@ import { ToggleSlider } from "react-toggle-slider";
 import { Transition } from '@headlessui/react'
 
 
-const Sidebar = ({sideBarToTimer, toggleReset, toggleRestart, onClickFive, onClickFour, onClickIncrement, onClickDecrement, onChangeValue}) => {
+const Sidebar = ({sideBarToTimer, toggleReset, toggleRestart, onClickFive, onClickFour, onClickIncrement, onClickDecrement, onChangeValue, toggleColorWarning, colorWarningTime,  toggleBeepWarning, BeepWarningTime}) => {
     const [isOpen, setOpen] = useState(false)
     const [resetActive, setResetActive] = useState(true);
     const [restartActive, setRestartActive] = useState(true);
-    const [colorChange, setColorChange] = useState(true);
-    const [willBeep, setWillBeep] = useState(true);
+    const [warningBeep, setWarningBeep] = useState(true);
+    const [warningColor, setWarningcolor] = useState(false);
 
     const sendTimeInput = (inputValue) =>{
         sideBarToTimer(inputValue);
     }
+    
+    // const sendBeepWarningInput = (inputValue) => {
+    //     setWarningTime(inputValue);
+    // }
+
+    const sendColorWarningInput = (inputValue) => {
+        colorWarningTime(inputValue);
+    }
+
 
     useEffect(() => {
         toggleReset();  
@@ -27,15 +36,13 @@ const Sidebar = ({sideBarToTimer, toggleReset, toggleRestart, onClickFive, onCli
         toggleRestart();  
     },[restartActive]);
 
-    // useEffect(() => {
-    //     toggleColorChange();  
-    // },[colorChange]);
-    
-    // useEffect(() => {
-    //     toggleWillBeep();  
-    // },[willBeep]);
-    //, toggleWillBeep, toggleColorChange
-    // px-7 py-11 bg-graphicImage md:h-8 md:w-8 z-20 p-6 m-6 absolute top-5 left-5
+    useEffect(() => {
+        toggleColorWarning();
+    }, [warningColor]);
+
+    useEffect(() => {
+        toggleBeepWarning();
+    }, [warningBeep]);
 
     return(
 
@@ -56,7 +63,7 @@ const Sidebar = ({sideBarToTimer, toggleReset, toggleRestart, onClickFive, onCli
             <div><FaArrowLeft onClick={() => setOpen(!isOpen)} className='scale-125 cursor-pointer hover:opacity-75 2xl:h-8 2xl:w-8 transition-all duration-300' color='white'/></div>
             <div id="timerInput">
                 <div className='font-semibold text-white py-1'>
-                    Input Time
+                    Input Time (hh:mm:ss)
                 </div>
                 <TimeInput className='' sendTimeInput={sendTimeInput}/>
             </div>
@@ -90,22 +97,25 @@ const Sidebar = ({sideBarToTimer, toggleReset, toggleRestart, onClickFive, onCli
 
             <div id="mode2">
                 <div className='text-white font-semibold py-2'>
-                    Auto Loop
+                    Auto Start
                 </div>
                 {/* <input type="checkbox" onChange={state => setRestartActive(state)}/> */}
                 <ToggleSlider onToggle={state => setRestartActive(state)} draggable={false} barBackgroundColorActive={"#73f3eb"} active={restartActive}/>
             </div>
             <div>
                 <div className='text-white font-semibold py-2'>
-                    Set warning Beep
+                    Timer Warnings
                 </div>
-                <input className="w-4 h-4 accent-[#73f3eb]" type="checkbox" onChange={state => setWillBeep(state)}/>
-            </div>
-            <div>
                 <div className='text-white font-semibold py-2'>
-                    set Color Change
+                    warning Beep (@5s)
+                    <input className="mx-2 w-4 h-4 accent-[#73f3eb]" type="checkbox" defaultChecked onChange={state => setWarningBeep(state)}/>
                 </div>
-                <input className="w-4 h-4 accent-[#73f3eb]" type="checkbox" onChange={state => setColorChange(state)}/>
+                {/* <TimeInput className='' sendTimeInput={sendBeepWarningInput}/> */}
+                <div className='text-white font-semibold py-2'>
+                    warning color (Red)
+                    <input className="mx-2 w-4 h-4 accent-[#73f3eb]" type="checkbox" onChange={state => setWarningcolor(state)}/>
+                </div>
+                <TimeInput className='' sendTimeInput={sendColorWarningInput}/>
             </div>
             <div className="h-24 w-48">
                 <img src="../diagonal-logo-white.png" alt="Full Logo UTB"></img>

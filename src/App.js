@@ -189,9 +189,9 @@ function App() {
       if (warningBeep){
         playLong();
       }
-      if (warningColor){
-        colorRef.current.style.color = "white";
-      }
+
+      colorRef.current.style.color = "white";
+   
     }
   }, [seconds, minutes, hours, isRunning, done]);
 

@@ -260,7 +260,7 @@ function App() {
             <Sidebar toggleReset={updateReset} toggleRestart={updateRestart} sideBarToTimer={valueToTimer} onClickFive={onClickFive} onClickFour={onClickFour} onClickDecrement={onClickDecrement} onClickIncrement={onClickIncrement} onChangeValue={onChangeValue} toggleColorWarning={colorToggle} colorWarningTime={colorTimeInput} toggleBeepWarning={beepToggle}/>
         </div>
         {/* Logo Title */}
-        <div className='absolute top-5 right-5 h-1/12 w-1/12'>
+        <div className='absolute bottom-5 right-5 h-1/12 w-1/12'>
             <img class='' src="../logo-white.png" alt="Full Logo UTB"></img>
         </div>
       </header>

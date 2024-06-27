@@ -8,12 +8,13 @@ import { ToggleSlider } from "react-toggle-slider";
 import { Transition } from '@headlessui/react'
 
 
-const Sidebar = ({sideBarToTimer, toggleReset, toggleRestart, onClickFive, onClickFour, onClickIncrement, onClickDecrement, onChangeValue, toggleColorWarning, colorWarningTime,  toggleBeepWarning, BeepWarningTime}) => {
+const Sidebar = ({sideBarToTimer, toggleReset, toggleRestart, onClickFive, onClickFour, onClickIncrement, onClickDecrement, onChangeValue, toggleColorWarning, colorWarningTime,  toggleBeepWarning, BeepWarningTime, toggleDisplayHours}) => {
     const [isOpen, setOpen] = useState(false)
     const [resetActive, setResetActive] = useState(true);
     const [restartActive, setRestartActive] = useState(true);
     const [warningBeep, setWarningBeep] = useState(true);
     const [warningColor, setWarningcolor] = useState(true);
+    const [displayHours, setDisplayHours] = useState(true);
 
     const sendTimeInput = (inputValue) =>{
         sideBarToTimer(inputValue);
@@ -44,6 +45,10 @@ const Sidebar = ({sideBarToTimer, toggleReset, toggleRestart, onClickFive, onCli
         toggleBeepWarning();
     }, [warningBeep]);
 
+    useEffect(() => {
+        toggleDisplayHours();
+    }, [displayHours]);
+
     return(
 
     <div className=''>
@@ -66,6 +71,10 @@ const Sidebar = ({sideBarToTimer, toggleReset, toggleRestart, onClickFive, onCli
                     Input Time (hh:mm:ss)
                 </div>
                 <TimeInput className='' sendTimeInput={sendTimeInput}/>
+            </div>
+            <div className='font-semibold text-white py-1'>
+                Hours Display
+                <ToggleSlider className="mx-2 w-4 h-4" barBackgroundColorActive={"#73f3eb"} draggable={false} onToggle={state => setDisplayHours(state)} active={displayHours}/>
             </div>
             <div>
                 <div className='font-semibold text-white py-1'>

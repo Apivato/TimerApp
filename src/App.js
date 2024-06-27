@@ -32,6 +32,7 @@ function App() {
   const [colorTime, setColorTime] = useState({s:0, m:0, h:0});
   const [warningColor, setWarningColor] = useState(false);
   const [changeColor, setChangeColor] = useState(false);
+  const [displayHours, setDisplayHours] = useState(false);
 
 
   let intervalRef = useRef();
@@ -52,9 +53,15 @@ function App() {
     
     const [str1, str2, str3] = inputValue.split(":");
 
-    const h = Number(str1);
-    const m = Number(str2);
-    const s = Number(str3);
+    var h = Number(str1);
+    var m = Number(str2);
+    var s = Number(str3);
+
+    if (!displayHours) {
+      m = m + (h * 60);
+      h = 0;
+      
+    }
 
     if (!isNaN(h) && !isNaN(m) && !isNaN(s)) {
       setHours(parseInt(h,10));
@@ -115,6 +122,10 @@ function App() {
 
   const beepToggle = () => {
     setWarningBeep(prev => !prev);
+  }
+
+  const hoursToggle = () => {
+    setDisplayHours(prev => !prev);
   }
   
   const onClickDecrement = () => {
@@ -244,6 +255,22 @@ function App() {
   }, [seconds, minutes, hours, isRunning, done, colorTime]);
 
 
+  useEffect(() => {
+    var m = minutes;
+    var h = hours;
+    if (!displayHours) {
+      m = m + (h * 60);
+      h = 0;
+      
+    }
+    else {
+      h = Math.floor( m / 60);
+      m = m % 60;
+    }
+    console.log(h, m)
+    valueToTimer(parseInt(h,10)+":"+parseInt(m,10)+":"+seconds);
+  }, [displayHours])
+
   return (
     <div className='relative h-screen max-h-screen bg-graphicImage bg-cover bg-no-repeat bg-center transition '>
       {/* ^global container div  bg-contain bg-graphicImage bg-black*/}
@@ -257,7 +284,7 @@ function App() {
       <header className='w-screen'>
         <div id="mySidenav" className='fixed z-20' >
             {/*Sidebar */}
-            <Sidebar toggleReset={updateReset} toggleRestart={updateRestart} sideBarToTimer={valueToTimer} onClickFive={onClickFive} onClickFour={onClickFour} onClickDecrement={onClickDecrement} onClickIncrement={onClickIncrement} onChangeValue={onChangeValue} toggleColorWarning={colorToggle} colorWarningTime={colorTimeInput} toggleBeepWarning={beepToggle}/>
+            <Sidebar toggleReset={updateReset} toggleRestart={updateRestart} sideBarToTimer={valueToTimer} onClickFive={onClickFive} onClickFour={onClickFour} onClickDecrement={onClickDecrement} onClickIncrement={onClickIncrement} onChangeValue={onChangeValue} toggleColorWarning={colorToggle} colorWarningTime={colorTimeInput} toggleBeepWarning={beepToggle} toggleDisplayHours={hoursToggle}/>
         </div>
         {/* Logo Title */}
         <div className='absolute bottom-5 right-5 h-1/12 w-1/12'>
@@ -270,9 +297,14 @@ function App() {
         <div ref={colorRef} className='timerText text-xxs xs:text-xs sm:text-sm md:text-md lg:text-lg xl:text-xl 2xl:text-2xl 3xl:text-3xl 4xl:text-4xl 5xl:text-5xl 6xl:text-6xl text-white font-semibold font-mono transition-all duration-400'>
         {/* text-black text-white*/}
           {
-              <h1 className='rounded-full bg-black px-3'>
-                {/* rounded-full bg-black bg-[#73f3eb] rounded-3xl*/}
+            displayHours &&
+            <h1 className='rounded-full bg-black px-3'>
                 {hours < 10 ? `0${hours}`: hours}:{minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds}
+            </h1>}
+          {
+            !displayHours &&
+              <h1 className='rounded-full bg-black px-3'>
+                {minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds}
               </h1>
           }
         </div>

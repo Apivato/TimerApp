@@ -193,6 +193,17 @@ function App() {
    }
 
 
+   useEffect(() => {
+
+    const h = Number(colorTime["h"]);
+    const m = Number(colorTime["m"]);
+    const s = Number(colorTime["s"]);
+    if (seconds === s  && minutes === m && hours === h && isRunning && !done && warningColor){
+      colorRef.current.style.color = "red";
+    }
+  }, [seconds, minutes, hours, isRunning, done, colorTime]);
+
+
   useEffect(() => {
     if(seconds === 0 && minutes === 0 && hours === 0 && isRunning && !done) 
     {
@@ -243,16 +254,6 @@ function App() {
       playShort();
     }
   }, [seconds, minutes, hours, isRunning, done])
-
-  useEffect(() => {
-
-    const h = Number(colorTime["h"]);
-    const m = Number(colorTime["m"]);
-    const s = Number(colorTime["s"]);
-    if (seconds === s  && minutes === m && hours === h && isRunning && !done && warningColor){
-      colorRef.current.style.color = "red";
-    }
-  }, [seconds, minutes, hours, isRunning, done, colorTime]);
 
 
   useEffect(() => {

@@ -295,16 +295,16 @@ function App() {
       {/* interface container div */}
       <div id="main" className='fixed mx-auto my-auto inset-x-0 inset-y-0 h-1/2 w-1/2 flex flex-col items-center'>
         {/* Output container div */}
-        <div ref={colorRef} className='timerText text-xxs xs:text-xs sm:text-sm md:text-md lg:text-lg xl:text-xl 2xl:text-2xl 3xl:text-3xl 4xl:text-4xl 5xl:text-5xl 6xl:text-6xl text-white font-semibold font-mono transition-all duration-400'>
+        <div ref={colorRef} className='timerText text-xxs text-white font-semibold font-mono'>
         {/* text-black text-white*/}
           {
             displayHours &&
-            <h1 className='rounded-full bg-black px-3'>
+            <h1 className='rounded-md bg-black px-3 xs:text-xs sm:text-sm md:text-md lg:text-lg xl:text-xl 2xl:text-2xl 3xl:text-3xl 4xl:text-4xl 5xl:text-5xl 6xl:text-6xl transition-all duration-300 ease-in-out'>
                 {hours < 10 ? `0${hours}`: hours}:{minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds}
             </h1>}
           {
             !displayHours &&
-              <h1 className='rounded-full bg-black px-3'>
+              <h1 className='rounded-md bg-black px-3 xs:text-sm sm:text-md md:text-lg lg:text-lg xl:text-2xl 2xl:text-3xl 3xl:text-4xl 4xl:text-5xl 5xl:text-6xl 6xl:text-7xl transition-all duration-300 ease-in-out'>
                 {minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds}
               </h1>
           }

@@ -43,6 +43,8 @@ module.exports = {
     '4xl': ['15rem', '15.45rem'],
     '5xl': ['17.5rem', '17.95rem'],
     '6xl': ['21rem', '21.45rem'],
+    '7xl': ['24rem', '24.45rem'],
+    '8xl': ['28rem', '28.45rem'],
   },
   },
   

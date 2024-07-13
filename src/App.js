@@ -100,7 +100,7 @@ function App() {
       };
     }
     // setIsPause((prev) => !prev);
-    // console.log(isPause,isRunning, done);
+    // console.log(isPause,isRunning, done); 1000
   };
 
   const onChangeValue = () => {
@@ -230,20 +230,13 @@ function App() {
   }, [isReset, isRestart, done]);
 
   useEffect(() => {
-    if(seconds === 0 && minutes === 0 && hours > 0 && isRunning) setMinutes(60);
+    if (seconds < 0 && isRunning) setSeconds(59);
+    if (seconds < 0 && minutes > 0 && isRunning) setMinutes(prev => (prev - 1 < 0 ? 0 : prev - 1));
+    if (seconds < 0 && minutes === 0 && hours > 0 && isRunning){
+      setHours(prev => (prev - 1 < 0 ? 0 : prev - 1));
+      setMinutes(59);
+    } 
   }, [seconds, minutes, hours, isRunning]);
-  
-  useEffect(() => {
-    if(seconds === 0 && minutes > 0 && isRunning) setSeconds(59);
-  }, [seconds, minutes, isRunning]);
-
-  useEffect(() => {
-    if(seconds === 59 && !done) setMinutes(prev => (prev - 1 < 0 ? 0 : prev - 1));
-  }, [seconds, done]);
-
-  useEffect(() => {
-    if(seconds === 59 && minutes === 59 && !done) setHours(prev => (prev - 1 < 0 ? 0 : prev - 1));
-  }, [seconds, minutes, done]);
 
   const [playShort] = useSound(shortBeep, { volume: 0.25 });
 
@@ -268,7 +261,7 @@ function App() {
       h = Math.floor( m / 60);
       m = m % 60;
     }
-    console.log(h, m)
+    // console.log(h, m)
     valueToTimer(parseInt(h,10)+":"+parseInt(m,10)+":"+seconds);
   }, [displayHours])
 
